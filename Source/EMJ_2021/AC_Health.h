@@ -30,6 +30,7 @@ public:
 
 	DECLARE_EVENT(UAC_Health, FChangedEvent)
 	FChangedEvent& OnDie() { return _changedEvent; }
+
 	UFUNCTION(BlueprintCallable, Category = "Health Component", meta = (Keyword = "health", ToolTip = "Heal this actor"))
 		/**
 		 * Heal this Actor

@@ -17,7 +17,7 @@ void UAC_Health::Setup()
 	this->_currentHealth = MaxHealth;
 }
 
-void UAC_Health::Heal(float amount)
+void UAC_Health::Heal(int amount)
 {
 	int tempHealth = this->_currentHealth + amount;
 
@@ -27,7 +27,7 @@ void UAC_Health::Heal(float amount)
 		this->_currentHealth = tempHealth;
 }
 
-void UAC_Health::TakeDamage(float amount, EDeath& Branch)
+void UAC_Health::TakeDamage(int amount, EDeath& Branch)
 {
 	int tempHealth = this->_currentHealth - amount;
 
@@ -40,10 +40,10 @@ void UAC_Health::TakeDamage(float amount, EDeath& Branch)
 	}
 }
 
-bool UAC_Health::TakeHit(float amount)
+bool UAC_Health::TakeHit(int amount)
 {
 	float tempHealth = this->_currentHealth - amount;
-	if (CheckForDeath(tempHealth))
+	if (this->CheckForDeath(tempHealth))
 	{
 		_currentHealth = 0;
 		return true;
