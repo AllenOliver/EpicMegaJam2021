@@ -37,6 +37,9 @@ public:
 	UPROPERTY(EditAnywhere)
 		E_COLOR StartColor;
 
+	UPROPERTY(EditAnywhere)
+		bool CanShift;
+
 public:
 
 	/**

@@ -3,34 +3,24 @@
 #pragma once
 
 #include "CoreMinimal.h"
-#include "AC_Health.h"
-#include "AC_Shift.h"
-#include "Components/StaticMeshComponent.h"
 #include "GameFramework/Actor.h"
-#include "Destructable.generated.h"
+#include "ShiftableObject.generated.h"
 
 UCLASS()
-class EMJ_2021_API ADestructable : public AActor
+class EMJ_2021_API AShiftableObject : public AActor
 {
 	GENERATED_BODY()
-
-public:
+	
+public:	
 	// Sets default values for this actor's properties
-	ADestructable();
-
-	UPROPERTY(EditAnywhere)
-		UAC_Health* Health;
-	UPROPERTY(EditAnywhere)
-		UAC_Shift* Shift;
-	UPROPERTY(EditAnywhere)
-		UStaticMeshComponent* Mesh;
-	bool Shiftable;
+	AShiftableObject();
 
 protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
 
-public:
+public:	
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
+
 };

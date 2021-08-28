@@ -22,17 +22,20 @@ void UAC_Shift::Update()
 
 void UAC_Shift::Shift()
 {
-	if (this->_currentColor == E_COLOR::RED)
+	if (CanShift)
 	{
-		this->SetCurrentMaterial(E_COLOR::BLUE);
-	}
-	else
-	{
-		this->SetCurrentMaterial(E_COLOR::RED);
+		if (this->_currentColor == E_COLOR::RED)
+		{
+			this->SetCurrentMaterial(E_COLOR::BLUE);
+		}
+		else
+		{
+			this->SetCurrentMaterial(E_COLOR::RED);
+		}
+		//Call event
+		OnShift().Broadcast();
 	}
 
-	//Call event
-	OnShift().Broadcast();
 	//TODO: Cache OG Material, Set new material, Make other things do it.
 }
 
@@ -48,8 +51,6 @@ void UAC_Shift::SetCurrentMaterial(E_COLOR _color)
 		this->_currentColor = E_COLOR::BLUE;
 		this->_currentMaterial = this->BlueMaterial;
 	}
-
-	//Set the Mesh's Material.
 }
 
 E_COLOR UAC_Shift::GetCurrentColor() { return this->_currentColor; }

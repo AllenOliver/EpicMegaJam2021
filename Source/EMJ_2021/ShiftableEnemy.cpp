@@ -18,6 +18,7 @@ AShiftableEnemy::AShiftableEnemy()
 void AShiftableEnemy::BeginPlay()
 {
 	Super::BeginPlay();
+	ALevelObjectCache::instance().AddToCache(this);
 }
 
 // Called every frame
@@ -32,7 +33,7 @@ void AShiftableEnemy::SetupPlayerInputComponent(UInputComponent* PlayerInputComp
 	Super::SetupPlayerInputComponent(PlayerInputComponent);
 }
 
-void AShiftableEnemy::TakeDamage(int Amount, E_COLOR _attackingColor)
+void AShiftableEnemy::TakeHit(int Amount, E_COLOR _attackingColor)
 {
 	if (Shift && Health)
 	{

@@ -5,6 +5,7 @@
 #include "CoreMinimal.h"
 #include "AC_Health.h"
 #include "AC_Shift.h"
+#include "LevelObjectCache.h"
 #include "Components/StaticMeshComponent.h"
 #include "GameFramework/Pawn.h"
 #include "ShiftableEnemy.generated.h"
@@ -37,5 +38,5 @@ public:
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
 
 	UFUNCTION(BlueprintCallable, Category = "Damage")
-		void TakeDamage(int Amount, E_COLOR _attackingColor);
+		void TakeHit(int Amount, E_COLOR _attackingColor);
 };

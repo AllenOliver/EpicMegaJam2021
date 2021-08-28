@@ -21,7 +21,11 @@ void ADestructable::BeginPlay()
 	if (Health)
 		Health->Setup();
 	if (Shift)
+	{
 		Shift->Setup();
+		Shiftable = Shift->CanShift;
+	}
+	//ALevelObjectCache::instance().AddToCache(this);
 }
 
 // Called every frame
