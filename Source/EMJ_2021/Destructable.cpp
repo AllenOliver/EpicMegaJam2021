@@ -1,6 +1,11 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
 #include "Destructable.h"
+#include "AC_Health.h"
+#include "AC_Shift.h"
+#include "Components/StaticMeshComponent.h"
+#include "CoreMinimal.h"
+#include "GameFramework/Actor.h"
 
 // Sets default values
 ADestructable::ADestructable()

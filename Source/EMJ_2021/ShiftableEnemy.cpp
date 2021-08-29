@@ -1,7 +1,10 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
 #include "ShiftableEnemy.h"
-
+#include "AC_Health.h"
+#include "AC_Shift.h"
+#include "LevelObjectCache.h"
+#include "Components/StaticMeshComponent.h"
 // Sets default values
 AShiftableEnemy::AShiftableEnemy()
 {
@@ -18,7 +21,7 @@ AShiftableEnemy::AShiftableEnemy()
 void AShiftableEnemy::BeginPlay()
 {
 	Super::BeginPlay();
-	//ALevelObjectCache::instance().AddToCache(this);
+	//ALevelObjectCache::AddToCache(this);
 }
 
 // Called every frame
@@ -40,4 +43,8 @@ void AShiftableEnemy::TakeHit(int Amount, E_COLOR _attackingColor)
 		if (_attackingColor == Shift->GetCurrentColor())
 			Health->TakeHit(Amount);
 	}
+}
+void AShiftableEnemy::OnDie_Implementation()
+{
+	//ALevelObjectCache::instance.AddToCache(this);
 }

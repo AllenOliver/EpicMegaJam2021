@@ -2,11 +2,12 @@
 
 #pragma once
 
-#include "CoreMinimal.h"
-#include "AC_Health.h"
-#include "AC_Shift.h"
-#include "Components/StaticMeshComponent.h"
-#include "GameFramework/Actor.h"
+#pragma region Forward Declaration
+class UAC_Health;
+class UAC_Shift;
+class UStaticMeshComponent;
+#pragma endregion
+
 #include "Destructable.generated.h"
 
 UCLASS()

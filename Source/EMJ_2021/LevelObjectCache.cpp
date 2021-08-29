@@ -1,7 +1,10 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
 #include "LevelObjectCache.h"
-
+#include "ShiftableEnemy.h"
+#include "Destructable.h"
+#include "AC_Shift.h"
+#include "EMJ_2021Character.h"
 #pragma region Built in functions
 
 // Sets default values

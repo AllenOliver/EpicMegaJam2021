@@ -5,13 +5,17 @@
 #include "CoreMinimal.h"
 #include "Runtime/Engine/Classes/Kismet/GameplayStatics.h"
 #include "GameFramework/Actor.h"
-#include "Destructable.h"
 #include "EngineUtils.h"
 #include "Containers/Array.h"
-#include "ShiftableEnemy.h"
-#include "EMJ_2021Character.h"
 #include "Engine/World.h"
 #include "LevelObjectCache.generated.h"
+
+#pragma region Forward Declarations
+class AShiftableEnemy;
+class ADestructable;
+class UAC_Shift;
+class AEMJ_2021Character;
+#pragma endregion
 
 UCLASS()
 class EMJ_2021_API ALevelObjectCache : public AActor

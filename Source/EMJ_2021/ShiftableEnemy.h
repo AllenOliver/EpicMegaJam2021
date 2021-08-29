@@ -3,11 +3,15 @@
 #pragma once
 
 #include "CoreMinimal.h"
-#include "AC_Health.h"
-#include "AC_Shift.h"
-#include "Components/StaticMeshComponent.h"
 #include "GameFramework/Pawn.h"
 #include "ShiftableEnemy.generated.h"
+
+#pragma region Forward Declaration
+class UAC_Health;
+class UAC_Shift;
+class UStaticMeshComponent;
+class ALevelObjectCache;
+#pragma endregion
 
 UCLASS()
 class EMJ_2021_API AShiftableEnemy : public APawn
@@ -38,4 +42,6 @@ public:
 
 	UFUNCTION(BlueprintCallable, Category = "Damage")
 		void TakeHit(int Amount, E_COLOR _attackingColor);
+	UFUNCTION(BlueprintNativeEvent, Category = "Death")
+		void OnDie();
 };
