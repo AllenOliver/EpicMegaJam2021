@@ -18,7 +18,7 @@ AShiftableEnemy::AShiftableEnemy()
 void AShiftableEnemy::BeginPlay()
 {
 	Super::BeginPlay();
-	ALevelObjectCache::instance().AddToCache(this);
+	//ALevelObjectCache::instance().AddToCache(this);
 }
 
 // Called every frame
