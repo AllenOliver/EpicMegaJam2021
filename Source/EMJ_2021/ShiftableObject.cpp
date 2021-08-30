@@ -4,6 +4,7 @@
 #include "LevelObjectCache.h"
 #include "AC_Shift.h"
 #include "AC_Health.h"
+#include "EMJ_2021Character.h"
 
 // Sets default values
 AShiftableObject::AShiftableObject()

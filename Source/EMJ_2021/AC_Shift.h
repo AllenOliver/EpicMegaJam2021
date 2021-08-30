@@ -4,16 +4,17 @@
 
 #include "CoreMinimal.h"
 #include "Misc/FilterCollection.h"
+#include "Constants.h"
 #include "Components/ActorComponent.h"
 #include "AC_Shift.generated.h"
 
-UENUM(BlueprintType)
-/* [uint8] An Enum to handle the death branch in BluePrint. */
-enum class E_COLOR : uint8
-{
-	RED,
-	BLUE
-};
+//UENUM(BlueprintType)
+///* [uint8] An Enum to handle the color of this object. */
+//enum class E_COLOR : uint8
+//{
+//	RED,
+//	BLUE
+//};
 
 UCLASS(ClassGroup = (Custom), meta = (BlueprintSpawnableComponent))
 /* [Actor Component] Handles shifting between one color and another. */

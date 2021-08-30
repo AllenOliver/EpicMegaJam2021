@@ -30,6 +30,7 @@ private:
 	ALevelObjectCache();
 public:
 
+#pragma region Caching and shifting.
 	//=== CACHING ===
 	void RemoveFromCache(AActor* _actor);
 	void AddToCache(AActor* _actor);
@@ -47,6 +48,7 @@ public:
 	// === BP functions ===
 	void MassShift();
 	void PopulateLists();
+#pragma endregion
 
 #pragma region Template Helper functions
 

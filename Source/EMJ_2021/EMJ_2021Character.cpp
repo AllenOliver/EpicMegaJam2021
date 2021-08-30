@@ -8,6 +8,10 @@
 #include "GameFramework/CharacterMovementComponent.h"
 #include "GameFramework/Controller.h"
 #include "GameFramework/SpringArmComponent.h"
+#include "EscapeGameMode_Base.h"
+
+#include "AC_Health.h"
+#include "AC_Shift.h"
 
 //////////////////////////////////////////////////////////////////////////
 // AEMJ_2021Character
@@ -36,17 +40,19 @@ AEMJ_2021Character::AEMJ_2021Character()
 	CameraBoom = CreateDefaultSubobject<USpringArmComponent>(TEXT("CameraBoom"));
 	CameraBoom->SetupAttachment(RootComponent);
 	CameraBoom->TargetArmLength = 300.0f; // The camera follows at this distance behind the character
-	CameraBoom->bUsePawnControlRotation = true; // Rotate the arm based on the controller
+	//CameraBoom->bUsePawnControlRotation = true; // Rotate the arm based on the controller
 
 	// Create a follow camera
 	FollowCamera = CreateDefaultSubobject<UCameraComponent>(TEXT("FollowCamera"));
 	FollowCamera->SetupAttachment(CameraBoom, USpringArmComponent::SocketName); // Attach the camera to the end of the boom and let the boom adjust to match the controller orientation
 	FollowCamera->bUsePawnControlRotation = false; // Camera does not rotate relative to arm
 
-	//ALevelObjectCache::instance().AddToCache(this);
-
 	// Note: The skeletal mesh and anim blueprint references on the Mesh component (inherited from Character)
 	// are set in the derived blueprint asset named MyCharacter (to avoid direct content references in C++)
+
+	//Set up customs
+	PlayerHealth = CreateDefaultSubobject<UAC_Health>(TEXT("Health"));
+	Shift = CreateDefaultSubobject<UAC_Shift>(TEXT("Shift"));
 }
 
 //////////////////////////////////////////////////////////////////////////
@@ -54,6 +60,13 @@ AEMJ_2021Character::AEMJ_2021Character()
 
 void AEMJ_2021Character::SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent)
 {
+
+	AEscapeGameMode_Base* gameMode = Cast<AEscapeGameMode_Base>(GetWorld()->GetAuthGameMode());
+	if (gameMode)
+	{
+		gameMode->ShiftedEvent.AddDynamic(this, &AEMJ_2021Character::ShiftColors);
+	}
+
 	// Set up gameplay key bindings
 	check(PlayerInputComponent);
 	PlayerInputComponent->BindAction("Jump", IE_Pressed, this, &ACharacter::Jump);
@@ -65,10 +78,10 @@ void AEMJ_2021Character::SetupPlayerInputComponent(class UInputComponent* Player
 	// We have 2 versions of the rotation bindings to handle different kinds of devices differently
 	// "turn" handles devices that provide an absolute delta, such as a mouse.
 	// "turnrate" is for devices that we choose to treat as a rate of change, such as an analog joystick
-	PlayerInputComponent->BindAxis("Turn", this, &APawn::AddControllerYawInput);
-	PlayerInputComponent->BindAxis("TurnRate", this, &AEMJ_2021Character::TurnAtRate);
-	PlayerInputComponent->BindAxis("LookUp", this, &APawn::AddControllerPitchInput);
-	PlayerInputComponent->BindAxis("LookUpRate", this, &AEMJ_2021Character::LookUpAtRate);
+	//PlayerInputComponent->BindAxis("Turn", this, &APawn::AddControllerYawInput);
+	//PlayerInputComponent->BindAxis("TurnRate", this, &AEMJ_2021Character::TurnAtRate);
+	//PlayerInputComponent->BindAxis("LookUp", this, &APawn::AddControllerPitchInput);
+	//PlayerInputComponent->BindAxis("LookUpRate", this, &AEMJ_2021Character::LookUpAtRate);
 
 	// handle touch devices
 	PlayerInputComponent->BindTouch(IE_Pressed, this, &AEMJ_2021Character::TouchStarted);
@@ -76,6 +89,16 @@ void AEMJ_2021Character::SetupPlayerInputComponent(class UInputComponent* Player
 
 	// VR headset functionality
 	PlayerInputComponent->BindAction("ResetVR", IE_Pressed, this, &AEMJ_2021Character::OnResetVR);
+
+
+	if (PlayerHealth)
+		PlayerHealth->Setup();
+	if (Shift)
+	{
+		Shift->Setup();
+		UE_LOG(LogTemp, Warning, TEXT("Setting up shift!"));
+
+	}
 }
 
 void AEMJ_2021Character::OnResetVR()
@@ -138,4 +161,14 @@ void AEMJ_2021Character::MoveRight(float Value)
 		// add movement in that direction
 		AddMovementInput(Direction, Value);
 	}
+}
+
+void AEMJ_2021Character::ShiftColors()
+{
+	if (Shift)
+	{
+		Shift->Shift();
+	}
+
+	//ShiftedEvent.Broadcast(); //Call shift on everything
 }

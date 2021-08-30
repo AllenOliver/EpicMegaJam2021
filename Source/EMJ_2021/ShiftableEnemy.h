@@ -11,6 +11,7 @@ class UAC_Health;
 class UAC_Shift;
 class UStaticMeshComponent;
 class ALevelObjectCache;
+class AEMJ_2021Character;
 #pragma endregion
 
 UCLASS()
@@ -28,6 +29,8 @@ public:
 		UAC_Shift* Shift;
 	UPROPERTY(EditAnywhere)
 		UStaticMeshComponent* Mesh;
+	UPROPERTY(EditAnywhere)
+		bool Shiftable;
 
 protected:
 	// Called when the game starts or when spawned
@@ -40,8 +43,13 @@ public:
 	// Called to bind functionality to input
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
 
+	UFUNCTION()
+		void ShiftEnemy();
+
 	UFUNCTION(BlueprintCallable, Category = "Damage")
 		void TakeHit(int Amount, E_COLOR _attackingColor);
 	UFUNCTION(BlueprintNativeEvent, Category = "Death")
 		void OnDie();
+private:
+	AEMJ_2021Character* _player;
 };

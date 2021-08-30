@@ -3,7 +3,9 @@
 #include "Destructable.h"
 #include "AC_Health.h"
 #include "AC_Shift.h"
+#include "EMJ_2021Character.h"
 #include "Components/StaticMeshComponent.h"
+#include "EscapeGameMode_Base.h"
 #include "CoreMinimal.h"
 #include "GameFramework/Actor.h"
 
@@ -23,6 +25,7 @@ ADestructable::ADestructable()
 void ADestructable::BeginPlay()
 {
 	Super::BeginPlay();
+
 	if (Health)
 		Health->Setup();
 	if (Shift)
@@ -30,11 +33,27 @@ void ADestructable::BeginPlay()
 		Shift->Setup();
 		Shiftable = Shift->CanShift;
 	}
-	//ALevelObjectCache::instance().AddToCache(this);
+
+	AEscapeGameMode_Base* gameMode = Cast<AEscapeGameMode_Base>(GetWorld()->GetAuthGameMode());
+	if (gameMode)
+	{
+		gameMode->ShiftedEvent.AddDynamic(this, &ADestructable::ShiftDestructable);
+	}
 }
 
 // Called every frame
 void ADestructable::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
+}
+// Called every frame
+void ADestructable::ShiftDestructable()
+{
+	if (Shift)
+	{
+		if (Shiftable)
+		{
+			Shift->Shift();
+		}
+	}
 }

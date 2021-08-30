@@ -6,6 +6,7 @@
 class UAC_Health;
 class UAC_Shift;
 class UStaticMeshComponent;
+class AEMJ_2021Character;
 #pragma endregion
 
 #include "Destructable.generated.h"
@@ -25,7 +26,8 @@ public:
 		UAC_Shift* Shift;
 	UPROPERTY(EditAnywhere)
 		UStaticMeshComponent* Mesh;
-	bool Shiftable;
+	UPROPERTY(EditAnywhere)
+		bool Shiftable;
 
 protected:
 	// Called when the game starts or when spawned
@@ -34,4 +36,7 @@ protected:
 public:
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
+
+	UFUNCTION()
+		void ShiftDestructable();
 };

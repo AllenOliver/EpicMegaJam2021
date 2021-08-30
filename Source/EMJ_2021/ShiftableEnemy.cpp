@@ -3,7 +3,9 @@
 #include "ShiftableEnemy.h"
 #include "AC_Health.h"
 #include "AC_Shift.h"
-#include "LevelObjectCache.h"
+#include "Constants.h"
+#include "EscapeGameMode_Base.h"
+#include "EMJ_2021Character.h"
 #include "Components/StaticMeshComponent.h"
 // Sets default values
 AShiftableEnemy::AShiftableEnemy()
@@ -15,13 +17,31 @@ AShiftableEnemy::AShiftableEnemy()
 	Shift = CreateDefaultSubobject<UAC_Shift>(TEXT("Enemy Shift"));
 	Mesh = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("Enemy Mesh"));
 	RootComponent = Mesh;
+
+	//auto _rawPlayer = UConstants::GetPlayer(GetWorld());
+	//auto _playerCast = Cast<AEMJ_2021Character>(_rawPlayer);
+	//UConstants::GetPlayer(GetWorld())->ShiftedEvent.AddDynamic(this, &AShiftableEnemy::ShiftEnemy);
 }
 
 // Called when the game starts or when spawned
 void AShiftableEnemy::BeginPlay()
 {
 	Super::BeginPlay();
-	//ALevelObjectCache::AddToCache(this);
+
+	if (Health)
+		Health->Setup();
+	if (Shift)
+	{
+		Shift->Setup();
+		Shiftable = Shift->CanShift;
+	}
+
+	AEscapeGameMode_Base* gameMode = Cast<AEscapeGameMode_Base>(GetWorld()->GetAuthGameMode());
+	if (gameMode)
+	{
+		gameMode->ShiftedEvent.AddDynamic(this, &AShiftableEnemy::ShiftEnemy);
+	}
+
 }
 
 // Called every frame
@@ -34,6 +54,17 @@ void AShiftableEnemy::Tick(float DeltaTime)
 void AShiftableEnemy::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
 {
 	Super::SetupPlayerInputComponent(PlayerInputComponent);
+}
+
+void AShiftableEnemy::ShiftEnemy()
+{
+	if (Shift) 
+	{
+		if (Shiftable) 
+		{
+			Shift->Shift();
+		}
+	}
 }
 
 void AShiftableEnemy::TakeHit(int Amount, E_COLOR _attackingColor)
