@@ -4,13 +4,15 @@
 
 #include "CoreMinimal.h"
 #include "GameFramework/Character.h"
+#include "Math/Color.h"
 #include "EMJ_2021Character.generated.h"
 
 #pragma region Forward Declarations
 class UAC_Health;
 class UAC_Shift;
+class AEscapeGameMode_Base;
+class APointLight;
 #pragma endregion
-
 
 UCLASS(config = Game)
 class AEMJ_2021Character : public ACharacter
@@ -28,7 +30,7 @@ class AEMJ_2021Character : public ACharacter
 		class UCameraComponent* FollowCamera;
 public:
 	AEMJ_2021Character();
-	
+
 	UFUNCTION(BlueprintCallable, Category = "Damage")
 		void TakeHit(int Amount, E_COLOR _attackingColor);
 
@@ -43,12 +45,10 @@ public:
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Camera)
 		float BaseLookUpRate;
 
-	UPROPERTY(EditAnywhere)
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 		UAC_Health* PlayerHealth;
-	UPROPERTY(EditAnywhere)
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 		UAC_Shift* Shift;
-	UPROPERTY(EditAnywhere)
-		float BoomLength;
 
 	UPROPERTY(EditAnywhere)
 		float BoomLength;
@@ -57,7 +57,13 @@ public:
 		void ShiftColors();
 
 	UFUNCTION(BlueprintNativeEvent, Category = "Death")
+		void OnShift();
+
+	UFUNCTION(BlueprintNativeEvent, Category = "Death")
 		void OnDie();
+
+private:
+	AEscapeGameMode_Base* _escapeGameMode;
 
 protected:
 
@@ -87,7 +93,6 @@ protected:
 
 	/** Handler for when a touch input stops. */
 	void TouchStopped(ETouchIndex::Type FingerIndex, FVector Location);
-
 
 protected:
 	// APawn interface

@@ -28,12 +28,15 @@ public:
 
 	DECLARE_EVENT(UAC_Shift, FChangedEvent)
 	FChangedEvent& OnShift() { return _changedEvent; }
-
 	UPROPERTY(EditAnywhere)
-		UMaterial* RedMaterial;
-
+		UMaterialInterface* RedMaterial;
 	UPROPERTY(EditAnywhere)
-		UMaterial* BlueMaterial;
+		UMaterialInterface* BlueMaterial;
+	//UPROPERTY(EditAnywhere)
+	//	UMaterial* RedMaterial;
+
+	//UPROPERTY(EditAnywhere)
+	//	UMaterial* BlueMaterial;
 
 	UPROPERTY(EditAnywhere)
 		E_COLOR StartColor;
@@ -76,10 +79,10 @@ public:
 		/**
 		 * Returns the current Material.
 		 */
-		UMaterial* GetCurrentMaterial();
+		UMaterialInterface* GetCurrentMaterial();
 private:
 	/** Broadcasts whenever the layer changes */
 	FChangedEvent _changedEvent;
 	E_COLOR _currentColor = E_COLOR::RED;
-	UMaterial* _currentMaterial;
+	UMaterialInterface* _currentMaterial;
 };

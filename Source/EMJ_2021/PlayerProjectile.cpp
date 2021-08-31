@@ -14,6 +14,6 @@ void APlayerProjectile::SetStartColor(E_COLOR _color)
 	if (Shift)
 	{
 		Shift->Setup();
-		Shift->Shift();
+		Shift->SetCurrentMaterial(_color);
 	}
 }

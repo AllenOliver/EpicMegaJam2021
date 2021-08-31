@@ -2,6 +2,7 @@
 
 #include "Constants.h"
 #include "EMJ_2021Character.h"
+#include "EscapeGameMode_Base.h"
 
 AEMJ_2021Character* UConstants::GetPlayer(UWorld* World)
 {
@@ -16,3 +17,10 @@ AEMJ_2021Character* UConstants::GetPlayer(UWorld* World)
 		return nullptr;
 	}
 }
+
+//AEscapeGameMode_Base* GetEscapeGameMode(UWorld* _world)
+//{
+//	if (AEscapeGameMode_Base* _escapeGameMode = Cast<AEscapeGameMode_Base>(UGameplayStatics::GetGameMode(_world)))
+//		return _escapeGameMode;
+//	else return nullptr;
+//}

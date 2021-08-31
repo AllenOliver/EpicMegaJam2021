@@ -30,17 +30,24 @@ public:
 	UPROPERTY(EditAnywhere)
 		AEMJ_2021Character* _currentPlayer;
 
+	UPROPERTY(EditAnywhere)
+		bool _gameIsPlaying;
+
 	UPROPERTY(BlueprintAssignable)
 		FShift ShiftedEvent;
 
 #pragma region Debug Console Commands
 
 	UFUNCTION(Exec, Category = ExecFunctions)
-		void Debug_Shift();	
+		void Debug_Shift();
 	UFUNCTION(Exec, Category = ExecFunctions)
 		void Reset_Level();
 	UFUNCTION(Exec, Category = ExecFunctions)
 		void Shift_Player();
+	UFUNCTION(Exec, Category = ExecFunctions)
+		void Level_Win();
+	UFUNCTION(Exec, Category = ExecFunctions)
+		void Level_Lose();
 
 #pragma endregion
 
@@ -55,16 +62,19 @@ private:
 public:
 	// === GameMode Code ===
 	UFUNCTION(BlueprintCallable, Category = "Gameplay")
-	virtual void StartGame();
+		virtual void StartGame();
 
 	UFUNCTION(BlueprintCallable, Category = "Gameplay")
-	virtual void WinGame();
+		virtual void WinGame();
+
+	UFUNCTION(BlueprintNativeEvent, Category = "Death")
+		void OnWinGame();
 
 	UFUNCTION(BlueprintCallable, Category = "Gameplay")
-	virtual void LoseGame();
+		virtual void LoseGame();
 
 	UFUNCTION(BlueprintCallable, Category = "Gameplay")
-	virtual void RespawnPlayer();
+		virtual void RespawnPlayer();
 
 	//=== CACHING ===
 	void RemoveFromCache(AActor* _actor);

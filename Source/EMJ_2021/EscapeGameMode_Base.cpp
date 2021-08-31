@@ -60,6 +60,10 @@ void AEscapeGameMode_Base::MassShift()
 	ShiftedEvent.Broadcast();
 }
 
+void AEscapeGameMode_Base::OnWinGame_Implementation()
+{
+}
+
 #pragma endregion
 
 #pragma region Adding and removing
@@ -245,3 +249,7 @@ void AEscapeGameMode_Base::Shift_Player()
 		_currentPlayer->ShiftColors();
 	}
 }
+
+void AEscapeGameMode_Base::Level_Win() { WinGame(); }
+
+void AEscapeGameMode_Base::Level_Lose() { LoseGame(); }

@@ -41,7 +41,6 @@ void AShiftableEnemy::BeginPlay()
 	{
 		gameMode->ShiftedEvent.AddDynamic(this, &AShiftableEnemy::ShiftEnemy);
 	}
-
 }
 
 // Called every frame
@@ -58,9 +57,9 @@ void AShiftableEnemy::SetupPlayerInputComponent(UInputComponent* PlayerInputComp
 
 void AShiftableEnemy::ShiftEnemy()
 {
-	if (Shift) 
+	if (Shift)
 	{
-		if (Shiftable) 
+		if (Shiftable)
 		{
 			Shift->Shift();
 		}
@@ -75,6 +74,7 @@ void AShiftableEnemy::TakeHit(int Amount, E_COLOR _attackingColor)
 			Health->TakeHit(Amount);
 	}
 }
+
 void AShiftableEnemy::OnDie_Implementation()
 {
 	//ALevelObjectCache::instance.AddToCache(this);

@@ -98,4 +98,4 @@ void UAC_Shift::SetCurrentMaterial(E_COLOR _color)
 
 E_COLOR UAC_Shift::GetCurrentColor() { return this->_currentColor; }
 
-UMaterial* UAC_Shift::GetCurrentMaterial() { return this->_currentMaterial; }
+UMaterialInterface* UAC_Shift::GetCurrentMaterial() { return this->_currentMaterial; }

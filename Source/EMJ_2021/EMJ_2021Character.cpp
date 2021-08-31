@@ -9,9 +9,11 @@
 #include "GameFramework/Controller.h"
 #include "GameFramework/SpringArmComponent.h"
 #include "EscapeGameMode_Base.h"
-
+#include "Constants.h"
 #include "AC_Health.h"
 #include "AC_Shift.h"
+#include "Engine/PointLight.h"
+#include "EscapeGameMode_Base.h"
 
 //////////////////////////////////////////////////////////////////////////
 // AEMJ_2021Character
@@ -65,9 +67,11 @@ void AEMJ_2021Character::TakeHit(int Amount, E_COLOR _attackingColor)
 	}
 }
 
+void AEMJ_2021Character::OnShift_Implementation()
+{
+}
 void AEMJ_2021Character::OnDie_Implementation()
 {
-	//ALevelObjectCache::instance.AddToCache(this);
 }
 
 //////////////////////////////////////////////////////////////////////////
@@ -75,7 +79,6 @@ void AEMJ_2021Character::OnDie_Implementation()
 
 void AEMJ_2021Character::SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent)
 {
-
 	AEscapeGameMode_Base* gameMode = Cast<AEscapeGameMode_Base>(GetWorld()->GetAuthGameMode());
 	if (gameMode)
 	{
@@ -105,14 +108,12 @@ void AEMJ_2021Character::SetupPlayerInputComponent(class UInputComponent* Player
 	// VR headset functionality
 	PlayerInputComponent->BindAction("ResetVR", IE_Pressed, this, &AEMJ_2021Character::OnResetVR);
 
-
 	if (PlayerHealth)
 		PlayerHealth->Setup();
 	if (Shift)
 	{
 		Shift->Setup();
 		UE_LOG(LogTemp, Warning, TEXT("Setting up shift!"));
-
 	}
 }
 
@@ -183,7 +184,9 @@ void AEMJ_2021Character::ShiftColors()
 	if (Shift)
 	{
 		Shift->Shift();
+		this->OnShift();
 	}
-
-	//ShiftedEvent.Broadcast(); //Call shift on everything
+	else
+	{
+	}
 }
