@@ -19,6 +19,7 @@ void AEscapeGameMode_Base::StartGame()
 		if (AEMJ_2021Character* _cast = Cast<AEMJ_2021Character>(myCharacter))
 		{
 			_currentPlayer = _cast;
+			UE_LOG(LogTemp, Warning, TEXT("Yes cast :)"));
 		}
 		else
 		{

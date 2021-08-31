@@ -20,9 +20,9 @@ class EMJ_2021_API APlayerProjectile : public APoolableObject
 public:
 	APlayerProjectile();
 
-	UPROPERTY(EditAnywhere)
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 		UAC_Shift* Shift;
-	UPROPERTY(EditAnywhere)
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 		E_COLOR CurrentColor;
 
 public:
