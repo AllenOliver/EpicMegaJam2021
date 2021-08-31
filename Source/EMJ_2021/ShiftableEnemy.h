@@ -23,9 +23,9 @@ public:
 	// Sets default values for this pawn's properties
 	AShiftableEnemy();
 
-	UPROPERTY(EditAnywhere)
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 		UAC_Health* Health;
-	UPROPERTY(EditAnywhere)
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 		UAC_Shift* Shift;
 	UPROPERTY(EditAnywhere)
 		UStaticMeshComponent* Mesh;
