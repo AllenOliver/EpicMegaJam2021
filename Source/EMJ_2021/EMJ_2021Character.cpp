@@ -39,7 +39,7 @@ AEMJ_2021Character::AEMJ_2021Character()
 	// Create a camera boom (pulls in towards the player if there is a collision)
 	CameraBoom = CreateDefaultSubobject<USpringArmComponent>(TEXT("CameraBoom"));
 	CameraBoom->SetupAttachment(RootComponent);
-	CameraBoom->TargetArmLength = 300.0f; // The camera follows at this distance behind the character
+	CameraBoom->TargetArmLength = BoomLength; // The camera follows at this distance behind the character
 	CameraBoom->bDoCollisionTest = 0; //Camera does not collide with geometry
 	//CameraBoom->bUsePawnControlRotation = true; // Rotate the arm based on the controller
 
@@ -54,6 +54,20 @@ AEMJ_2021Character::AEMJ_2021Character()
 	//Set up customs
 	PlayerHealth = CreateDefaultSubobject<UAC_Health>(TEXT("Health"));
 	Shift = CreateDefaultSubobject<UAC_Shift>(TEXT("Shift"));
+}
+
+void AEMJ_2021Character::TakeHit(int Amount, E_COLOR _attackingColor)
+{
+	if (Shift && PlayerHealth)
+	{
+		if (_attackingColor == Shift->GetCurrentColor())
+			PlayerHealth->TakeHit(Amount);
+	}
+}
+
+void AEMJ_2021Character::OnDie_Implementation()
+{
+	//ALevelObjectCache::instance.AddToCache(this);
 }
 
 //////////////////////////////////////////////////////////////////////////

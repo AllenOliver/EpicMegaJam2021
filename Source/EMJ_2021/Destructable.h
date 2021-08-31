@@ -37,6 +37,12 @@ public:
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
 
+	UFUNCTION(BlueprintCallable, Category = "Damage")
+		void TakeHit(int Amount, E_COLOR _attackingColor);
+
 	UFUNCTION()
 		void ShiftDestructable();
+
+	UFUNCTION(BlueprintNativeEvent, Category = "Death")
+		void OnDestroy();
 };

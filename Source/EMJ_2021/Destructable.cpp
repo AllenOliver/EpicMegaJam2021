@@ -46,6 +46,14 @@ void ADestructable::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
 }
+void ADestructable::TakeHit(int Amount, E_COLOR _attackingColor)
+{
+	if (Shift && Health)
+	{
+		if (_attackingColor == Shift->GetCurrentColor())
+			Health->TakeHit(Amount);
+	}
+}
 // Called every frame
 void ADestructable::ShiftDestructable()
 {
@@ -56,4 +64,9 @@ void ADestructable::ShiftDestructable()
 			Shift->Shift();
 		}
 	}
+}
+
+void ADestructable::OnDestroy_Implementation()
+{
+	//ALevelObjectCache::instance.AddToCache(this);
 }

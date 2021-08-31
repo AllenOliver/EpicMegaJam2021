@@ -29,6 +29,9 @@ class AEMJ_2021Character : public ACharacter
 public:
 	AEMJ_2021Character();
 	
+	UFUNCTION(BlueprintCallable, Category = "Damage")
+		void TakeHit(int Amount, E_COLOR _attackingColor);
+
 	//UPROPERTY(BlueprintAssignable)
 	//FShift ShiftedEvent;
 
@@ -45,8 +48,15 @@ public:
 	UPROPERTY(EditAnywhere)
 		UAC_Shift* Shift;
 
+	UPROPERTY(EditAnywhere)
+		float BoomLength;
+
 	UFUNCTION(BlueprintCallable, Category = "Shifting")
 		void ShiftColors();
+
+	UFUNCTION(BlueprintNativeEvent, Category = "Death")
+		void OnDie();
+
 protected:
 
 	/** Resets HMD orientation in VR. */
@@ -75,7 +85,6 @@ protected:
 
 	/** Handler for when a touch input stops. */
 	void TouchStopped(ETouchIndex::Type FingerIndex, FVector Location);
-
 
 
 protected:

@@ -48,8 +48,10 @@ public:
 
 	UFUNCTION(BlueprintCallable, Category = "Damage")
 		void TakeHit(int Amount, E_COLOR _attackingColor);
+
 	UFUNCTION(BlueprintNativeEvent, Category = "Death")
 		void OnDie();
+
 private:
 	AEMJ_2021Character* _player;
 };
