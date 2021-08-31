@@ -44,6 +44,8 @@ public:
 		UAC_Health* PlayerHealth;
 	UPROPERTY(EditAnywhere)
 		UAC_Shift* Shift;
+	UPROPERTY(EditAnywhere)
+		float BoomLength;
 
 	UFUNCTION(BlueprintCallable, Category = "Shifting")
 		void ShiftColors();
