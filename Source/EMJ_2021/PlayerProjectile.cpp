@@ -8,6 +8,8 @@ APlayerProjectile::APlayerProjectile()
 	Shift = CreateDefaultSubobject<UAC_Shift>(TEXT("Shift Component"));
 }
 
+E_COLOR APlayerProjectile::GetColor() { return this->CurrentColor; }
+
 void APlayerProjectile::SetStartColor(E_COLOR _color)
 {
 	CurrentColor = _color;

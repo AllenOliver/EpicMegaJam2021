@@ -58,13 +58,38 @@ AEMJ_2021Character::AEMJ_2021Character()
 	Shift = CreateDefaultSubobject<UAC_Shift>(TEXT("Shift"));
 }
 
-void AEMJ_2021Character::TakeHit(int Amount, E_COLOR _attackingColor)
+bool AEMJ_2021Character::TakeHit(int Amount, E_COLOR _attackingColor)
 {
 	if (Shift && PlayerHealth)
 	{
-		if (_attackingColor == Shift->GetCurrentColor())
-			PlayerHealth->TakeHit(Amount);
+		if (_attackingColor == Shift->GetCurrentColor()) 
+		{
+			if (PlayerHealth->TakeHit(Amount)) //Died
+			{
+				return true;
+			}
+			else 
+			{
+				return false;
+			}
+			return false;
+		}
+		else 
+		{
+			return false;
+		}
 	}
+	else 
+	{
+		return false;
+	}
+}
+
+void AEMJ_2021Character::Die() 
+{ 
+	this->OnDie();
+
+
 }
 
 void AEMJ_2021Character::OnShift_Implementation()
@@ -190,3 +215,5 @@ void AEMJ_2021Character::ShiftColors()
 	{
 	}
 }
+
+

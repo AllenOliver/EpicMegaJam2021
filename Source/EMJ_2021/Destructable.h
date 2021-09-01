@@ -40,6 +40,12 @@ public:
 	UFUNCTION(BlueprintCallable, Category = "Damage")
 		void TakeHit(int Amount, E_COLOR _attackingColor);
 
+	UFUNCTION(BlueprintCallable, Category = "Color")
+		E_COLOR GetCurrentColor();
+
+	UFUNCTION(BlueprintCallable, Category = "Death")
+		void Destroy();
+
 	UFUNCTION()
 		void ShiftDestructable();
 

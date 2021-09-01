@@ -32,7 +32,9 @@ public:
 	AEMJ_2021Character();
 
 	UFUNCTION(BlueprintCallable, Category = "Damage")
-		void TakeHit(int Amount, E_COLOR _attackingColor);
+		bool TakeHit(int Amount, E_COLOR _attackingColor);
+	UFUNCTION(BlueprintCallable, Category = "Death")
+		void Die();
 
 	//UPROPERTY(BlueprintAssignable)
 	//FShift ShiftedEvent;

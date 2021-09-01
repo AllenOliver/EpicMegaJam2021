@@ -3,11 +3,13 @@
 #include "EnemyProjectile.h"
 #include "AC_Shift.h"
 
+
 AEnemyProjectile::AEnemyProjectile() 
 {
 	Shift = CreateDefaultSubobject<UAC_Shift>(TEXT("Shift Component"));
 }
 
+E_COLOR AEnemyProjectile::GetColor() { return this->CurrentColor; }
 
 void AEnemyProjectile::SetStartColor(E_COLOR _color)
 {

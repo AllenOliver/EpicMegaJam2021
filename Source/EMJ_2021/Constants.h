@@ -41,6 +41,14 @@ enum class E_COLOR : uint8
 	BLUE
 };
 
+UENUM(BlueprintType)
+/* [uint8] An Enum to handle the Winning or losing the game. */
+enum class E_WIN_OR_LOSS : uint8
+{
+	WIN,
+	LOSE
+};
+
 #pragma endregion
 
 #pragma region Template Helper functions

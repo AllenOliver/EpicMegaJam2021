@@ -47,7 +47,13 @@ public:
 		void ShiftEnemy();
 
 	UFUNCTION(BlueprintCallable, Category = "Damage")
-		void TakeHit(int Amount, E_COLOR _attackingColor);
+		bool TakeHit(int Amount, E_COLOR _attackingColor);
+
+	UFUNCTION(BlueprintCallable, Category = "Death")
+		void Die();	
+
+	UFUNCTION(BlueprintCallable, Category = "Color")
+		E_COLOR GetColor();
 
 	UFUNCTION(BlueprintNativeEvent, Category = "Death")
 		void OnDie();

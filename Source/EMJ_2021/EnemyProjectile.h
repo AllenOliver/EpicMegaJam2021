@@ -28,4 +28,6 @@ public:
 public:
 	UFUNCTION(BlueprintCallable, Category = "Enemy Projectiles")
 		void SetStartColor(E_COLOR _color);
+	UFUNCTION(BlueprintCallable, Category = "Enemy Projectile Color")
+		E_COLOR GetColor();
 };

@@ -27,6 +27,8 @@ public:
 
 public:
 	UFUNCTION(BlueprintCallable, Category = "Player Projectiles")
-		void SetStartColor(E_COLOR _color);
+		void SetStartColor(E_COLOR _color);	
+	UFUNCTION(BlueprintCallable, Category = "Player Projectiles")
+		E_COLOR GetColor();
 	
 };

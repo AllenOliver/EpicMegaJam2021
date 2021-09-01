@@ -5,6 +5,8 @@
 #include "CoreMinimal.h"
 #include "GameFramework/GameMode.h"
 #include "EngineUtils.h"
+#include "Constants.h"
+
 #include "EscapeGameMode_Base.generated.h"
 
 #pragma region Forward Declarations
@@ -48,6 +50,8 @@ public:
 		void Level_Win();
 	UFUNCTION(Exec, Category = ExecFunctions)
 		void Level_Lose();
+	//UFUNCTION(Exec, Category = ExecFunctions)
+	//	void Open_Level();
 
 #pragma endregion
 
@@ -67,11 +71,12 @@ public:
 	UFUNCTION(BlueprintCallable, Category = "Gameplay")
 		virtual void WinGame();
 
+	UFUNCTION(BlueprintCallable)
+		void OpenLevel(UWorld* _world, FString _levelName);
+
+
 	UFUNCTION(BlueprintNativeEvent, Category = "Death")
 		void OnWinGame();
-
-	UFUNCTION(BlueprintCallable, Category = "Gameplay")
-		virtual void LoseGame();
 
 	UFUNCTION(BlueprintCallable, Category = "Gameplay")
 		virtual void RespawnPlayer();

@@ -4,7 +4,6 @@
 #include "ShiftableEnemy.h"
 #include "Destructable.h"
 #include "Kismet/GameplayStatics.h"
-#include "Constants.h"
 #include "AC_Shift.h"
 #include "EMJ_2021Character.h"
 
@@ -30,14 +29,32 @@ void AEscapeGameMode_Base::StartGame()
 	//PopulateLists();
 }
 
-void AEscapeGameMode_Base::WinGame()
-{
-}
+void AEscapeGameMode_Base::WinGame() { OnWinGame(); }
 
-void AEscapeGameMode_Base::LoseGame()
+
+void AEscapeGameMode_Base::OpenLevel(UWorld* _world, FString _levelName)
 {
-	RespawnPlayer();
-	//reset enemies
+	if (_world)
+	{
+		FString _currentMapName = _world->GetMapName();
+
+		if (_levelName != "") 
+		{
+			if (_currentMapName != _levelName)
+				UGameplayStatics::OpenLevel(_world, FName(*_levelName));
+			else 
+				this->ResetLevel();
+		}
+		else
+		{
+			UE_LOG(LogTemp, Warning, TEXT("Level name is empty. Doing nothing >:D"));
+		}
+	}
+	else 
+	{
+		UE_LOG(LogTemp, Warning, TEXT("World not defined. Doing nothing >:D"));
+	}
+
 }
 
 void AEscapeGameMode_Base::RespawnPlayer()
@@ -240,7 +257,8 @@ void AEscapeGameMode_Base::Debug_Shift()
 
 void AEscapeGameMode_Base::Reset_Level()
 {
-	RespawnPlayer();
+	this->RestartGame();
+	//RespawnPlayer();
 }
 
 void AEscapeGameMode_Base::Shift_Player()
@@ -253,4 +271,4 @@ void AEscapeGameMode_Base::Shift_Player()
 
 void AEscapeGameMode_Base::Level_Win() { WinGame(); }
 
-void AEscapeGameMode_Base::Level_Lose() { LoseGame(); }
+void AEscapeGameMode_Base::Level_Lose() {  }

@@ -54,6 +54,13 @@ void ADestructable::TakeHit(int Amount, E_COLOR _attackingColor)
 			Health->TakeHit(Amount);
 	}
 }
+E_COLOR ADestructable::GetCurrentColor()
+{
+	if (Shift) 
+		return Shift->GetCurrentColor();
+	else 
+		return E_COLOR();
+}
 // Called every frame
 void ADestructable::ShiftDestructable()
 {
@@ -65,6 +72,8 @@ void ADestructable::ShiftDestructable()
 		}
 	}
 }
+
+void ADestructable::Destroy() { OnDestroy(); }
 
 void ADestructable::OnDestroy_Implementation()
 {

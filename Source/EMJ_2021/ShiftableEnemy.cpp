@@ -66,13 +66,29 @@ void AShiftableEnemy::ShiftEnemy()
 	}
 }
 
-void AShiftableEnemy::TakeHit(int Amount, E_COLOR _attackingColor)
+bool AShiftableEnemy::TakeHit(int Amount, E_COLOR _attackingColor)
 {
 	if (Shift && Health)
 	{
-		if (_attackingColor == Shift->GetCurrentColor())
-			Health->TakeHit(Amount);
+		if (_attackingColor == Shift->GetCurrentColor()) 
+		{
+			if (Health->TakeHit(Amount)) { return true; } //Die
+			else{ return false; }
+		}
+		else { return false; }
 	}
+	else { return false; }
+}
+
+void AShiftableEnemy::Die() { OnDie(); }
+
+E_COLOR AShiftableEnemy::GetColor()
+{
+	if (Shift) 
+	{
+		return Shift->GetCurrentColor();
+	}
+	else { return E_COLOR(); }
 }
 
 void AShiftableEnemy::OnDie_Implementation()
