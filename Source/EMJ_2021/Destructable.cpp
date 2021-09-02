@@ -46,14 +46,22 @@ void ADestructable::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
 }
+
 void ADestructable::TakeHit(int Amount, E_COLOR _attackingColor)
 {
 	if (Shift && Health)
 	{
-		if (_attackingColor == Shift->GetCurrentColor())
-			Health->TakeHit(Amount);
+		if (_attackingColor == Shift->GetCurrentColor()) 
+		{
+			if (Health->TakeHit(Amount)) 
+			{
+				Destroy();
+			}
+		}
+			
 	}
 }
+
 E_COLOR ADestructable::GetCurrentColor()
 {
 	if (Shift) 
