@@ -31,18 +31,17 @@ void AEscapeGameMode_Base::StartGame()
 
 void AEscapeGameMode_Base::WinGame() { OnWinGame(); }
 
-
 void AEscapeGameMode_Base::OpenLevel(UWorld* _world, FString _levelName)
 {
 	if (_world)
 	{
 		FString _currentMapName = _world->GetMapName();
 
-		if (_levelName != "") 
+		if (_levelName != "")
 		{
 			if (_currentMapName != _levelName)
 				UGameplayStatics::OpenLevel(_world, FName(*_levelName));
-			else 
+			else
 				this->ResetLevel();
 		}
 		else
@@ -50,11 +49,10 @@ void AEscapeGameMode_Base::OpenLevel(UWorld* _world, FString _levelName)
 			UE_LOG(LogTemp, Warning, TEXT("Level name is empty. Doing nothing >:D"));
 		}
 	}
-	else 
+	else
 	{
 		UE_LOG(LogTemp, Warning, TEXT("World not defined. Doing nothing >:D"));
 	}
-
 }
 
 void AEscapeGameMode_Base::RespawnPlayer()
@@ -270,9 +268,3 @@ void AEscapeGameMode_Base::Shift_Player()
 }
 
 void AEscapeGameMode_Base::Level_Win() { WinGame(); }
-
-<<<<<<< Updated upstream
-void AEscapeGameMode_Base::Level_Lose() {  }
-=======
-void AEscapeGameMode_Base::Level_Lose() { LoseGame(); }
->>>>>>> Stashed changes

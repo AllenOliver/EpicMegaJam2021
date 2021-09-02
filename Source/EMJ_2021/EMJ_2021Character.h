@@ -11,10 +11,8 @@
 class UAC_Health;
 class UAC_Shift;
 class AEscapeGameMode_Base;
-<<<<<<< Updated upstream
 class APointLight;
-=======
->>>>>>> Stashed changes
+
 #pragma endregion
 
 UCLASS(config = Game)
@@ -49,6 +47,9 @@ public:
 	/** Base look up/down rate, in deg/sec. Other scaling may affect final rate. */
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Camera)
 		float BaseLookUpRate;
+
+	UPROPERTY(EditAnywhere)
+		float BoomLength;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 		UAC_Health* PlayerHealth;

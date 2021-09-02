@@ -25,15 +25,8 @@ public:
 	UFUNCTION(BlueprintCallable, Category = "Gameplay")
 		static void ResetCurrentLevel(UWorld* _world, UObject* _object) { UGameplayStatics::OpenLevel(_object, FName(_world->GetName()), false); }
 
-	UFUNCTION(BlueprintCallable, Category = "Gameplay")
-		static AEMJ_2021Character* GetPlayer(UWorld* World);
-<<<<<<< Updated upstream
-	//UFUNCTION(BlueprintCallable, Category = "Game Mode")
-	//	static AEscapeGameMode_Base* GetEscapeGameMode(UWorld* _world);
-=======
-	UFUNCTION(BlueprintCallable, Category = "Game Mode")
-		static AEscapeGameMode_Base* GetEscapeGameMode(UWorld* _world);
->>>>>>> Stashed changes
+	//UFUNCTION(BlueprintCallable, Category = "Gameplay")
+	//	static AEMJ_2021Character* GetPlayer(UWorld* World);
 };
 
 #pragma region Enums

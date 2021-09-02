@@ -12,13 +12,8 @@
 #include "Constants.h"
 #include "AC_Health.h"
 #include "AC_Shift.h"
-<<<<<<< Updated upstream
 #include "Engine/PointLight.h"
 #include "EscapeGameMode_Base.h"
-=======
-#include "EscapeGameMode_Base.h"
-
->>>>>>> Stashed changes
 
 //////////////////////////////////////////////////////////////////////////
 // AEMJ_2021Character
@@ -67,34 +62,32 @@ bool AEMJ_2021Character::TakeHit(int Amount, E_COLOR _attackingColor)
 {
 	if (Shift && PlayerHealth)
 	{
-		if (_attackingColor == Shift->GetCurrentColor()) 
+		if (_attackingColor == Shift->GetCurrentColor())
 		{
 			if (PlayerHealth->TakeHit(Amount)) //Died
 			{
 				return true;
 			}
-			else 
+			else
 			{
 				return false;
 			}
 			return false;
 		}
-		else 
+		else
 		{
 			return false;
 		}
 	}
-	else 
+	else
 	{
 		return false;
 	}
 }
 
-void AEMJ_2021Character::Die() 
-{ 
+void AEMJ_2021Character::Die()
+{
 	this->OnDie();
-
-
 }
 
 void AEMJ_2021Character::OnShift_Implementation()
@@ -109,17 +102,10 @@ void AEMJ_2021Character::OnDie_Implementation()
 
 void AEMJ_2021Character::SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent)
 {
-<<<<<<< Updated upstream
 	AEscapeGameMode_Base* gameMode = Cast<AEscapeGameMode_Base>(GetWorld()->GetAuthGameMode());
 	if (gameMode)
-=======
-	_escapeGameMode = UConstants::GetEscapeGameMode(GetWorld());
-
-	//AEscapeGameMode_Base* gameMode = Cast<AEscapeGameMode_Base>(GetWorld()->GetAuthGameMode());
-	if (_escapeGameMode)
->>>>>>> Stashed changes
 	{
-		_escapeGameMode->ShiftedEvent.AddDynamic(this, &AEMJ_2021Character::ShiftColors);
+		gameMode->ShiftedEvent.AddDynamic(this, &AEMJ_2021Character::ShiftColors);
 	}
 
 	// Set up gameplay key bindings
@@ -218,22 +204,12 @@ void AEMJ_2021Character::MoveRight(float Value)
 
 void AEMJ_2021Character::ShiftColors()
 {
-	if (_escapeGameMode)
+	if (Shift)
 	{
-		_escapeGameMode->MassShift();
-	}
-	else
-	{
-<<<<<<< Updated upstream
 		Shift->Shift();
-		this->OnShift();
-=======
-		//Nothing
->>>>>>> Stashed changes
 	}
 	else
 	{
+		//Nothing
 	}
 }
-
-
