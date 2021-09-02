@@ -6,6 +6,7 @@
 class UAC_Health;
 class UAC_Shift;
 class UStaticMeshComponent;
+class APlayerProjectile;
 class AEMJ_2021Character;
 #pragma endregion
 
@@ -48,6 +49,17 @@ public:
 
 	UFUNCTION()
 		void ShiftDestructable();
+
+#pragma region Overlapping
+
+	UFUNCTION()
+		void OnOverlapBegin(class UPrimitiveComponent* OverlappedComp, class AActor* OtherActor, class UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult);
+
+	UFUNCTION()
+		void OnOverlapEnd(class UPrimitiveComponent* OverlappedComp, class AActor* OtherActor, class UPrimitiveComponent* OtherComp, int32 OtherBodyIndex);
+
+#pragma endregion
+
 
 	UFUNCTION(BlueprintNativeEvent, Category = "Death")
 		void OnDestroy();

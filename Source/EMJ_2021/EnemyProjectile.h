@@ -25,9 +25,25 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 		E_COLOR CurrentColor;
 
+
 public:
 	UFUNCTION(BlueprintCallable, Category = "Enemy Projectiles")
 		void SetStartColor(E_COLOR _color);
 	UFUNCTION(BlueprintCallable, Category = "Enemy Projectile Color")
 		E_COLOR GetColor();
+
+	UFUNCTION(BlueprintCallable, Category = "Death")
+		void Destroy();
+	UFUNCTION(BlueprintNativeEvent, Category = "Death")
+		void OnDestroy();
+
+#pragma region Overlapping
+
+	UFUNCTION()
+		void OnOverlapBegin(class UPrimitiveComponent* OverlappedComp, class AActor* OtherActor, class UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult);
+
+	UFUNCTION()
+		void OnOverlapEnd(class UPrimitiveComponent* OverlappedComp, class AActor* OtherActor, class UPrimitiveComponent* OtherComp, int32 OtherBodyIndex);
+
+#pragma endregion
 };

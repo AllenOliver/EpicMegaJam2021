@@ -18,9 +18,13 @@
 //	}
 //}
 
-//AEscapeGameMode_Base* GetEscapeGameMode(UWorld* _world)
-//{
-//	if (AEscapeGameMode_Base* _escapeGameMode = Cast<AEscapeGameMode_Base>(UGameplayStatics::GetGameMode(_world)))
-//		return _escapeGameMode;
-//	else return nullptr;
-//}
+FString UConstants::GetGameVersion()
+{
+    FString proj;
+    GConfig->GetString(
+        TEXT("/Script/EngineSettings.GeneralProjectSettings"),
+        TEXT("ProjectVersion"),
+        proj,
+        GGameIni);
+    return proj;
+}

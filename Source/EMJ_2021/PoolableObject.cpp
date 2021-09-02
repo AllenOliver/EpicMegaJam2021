@@ -2,6 +2,7 @@
 
 #include "PoolableObject.h"
 #include "Components/StaticMeshComponent.h"
+#include "Components/BoxComponent.h"
 
 // Sets default values
 APoolableObject::APoolableObject()
@@ -11,6 +12,11 @@ APoolableObject::APoolableObject()
 
 	StaticMesh = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("Mesh"));
 	RootComponent = StaticMesh;
+
+	TriggerBox = CreateDefaultSubobject<UBoxComponent>(TEXT("Trigger Box"));
+	TriggerBox->SetBoxExtent(BoxExtents);
+	TriggerBox->SetCollisionProfileName(TEXT("Trigger"));
+	TriggerBox->SetupAttachment(RootComponent);
 }
 
 // Called when the game starts or when spawned

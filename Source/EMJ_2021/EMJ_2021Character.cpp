@@ -14,6 +14,11 @@
 #include "AC_Shift.h"
 #include "Engine/PointLight.h"
 #include "EscapeGameMode_Base.h"
+#include "EnemyProjectile.h"
+#include "Destructable.h"
+#include "ShiftableEnemy.h"
+
+
 
 //////////////////////////////////////////////////////////////////////////
 // AEMJ_2021Character
@@ -212,4 +217,56 @@ void AEMJ_2021Character::ShiftColors()
 	{
 		//Nothing
 	}
+}
+
+void AEMJ_2021Character::OnOverlapBegin(UPrimitiveComponent* OverlappedComp, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult)
+{
+	// check if Actors do not equal nullptr
+	if (OtherActor)
+	{
+		if (OtherActor->IsA(AEnemyProjectile::StaticClass()))
+		{
+			AEnemyProjectile* _enemyShot = Cast<AEnemyProjectile>(OtherActor);
+			if (_enemyShot)
+			{
+				if (_enemyShot->GetColor() == Shift->GetCurrentColor())
+				{ /*Nothing; We want opposites*/ }
+				else { Die(); }
+			}
+		}
+		else if (OtherActor->IsA(ADestructable::StaticClass()))
+		{
+			ADestructable* _destructable = Cast<ADestructable>(OtherActor);
+			if (_destructable) 
+			{
+				if (_destructable->GetCurrentColor() == Shift->GetCurrentColor()) 
+				{ /*Nothing; We want opposites*/ }
+				else { Die(); }
+			}
+
+		}
+		else if (OtherActor->IsA(AShiftableEnemy::StaticClass()))
+		{
+			AShiftableEnemy* _enemy = Cast<AShiftableEnemy>(OtherActor);
+			if (_enemy)
+			{
+				if (_enemy->GetColor() == Shift->GetCurrentColor())
+				{ /*Nothing; We want opposites*/
+				}
+				else { Die(); }
+			}
+		}
+	}
+
+	if (OtherActor)
+	{
+		if (OtherActor->IsA(AEnemyProjectile::StaticClass())) 
+		{
+
+		}
+	}
+}
+
+void AEMJ_2021Character::OnOverlapEnd(UPrimitiveComponent* OverlappedComp, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex)
+{
 }

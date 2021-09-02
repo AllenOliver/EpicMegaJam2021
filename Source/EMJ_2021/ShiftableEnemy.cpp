@@ -7,6 +7,7 @@
 #include "EscapeGameMode_Base.h"
 #include "EMJ_2021Character.h"
 #include "Components/StaticMeshComponent.h"
+#include "PlayerProjectile.h"
 // Sets default values
 AShiftableEnemy::AShiftableEnemy()
 {
@@ -18,6 +19,9 @@ AShiftableEnemy::AShiftableEnemy()
 	Mesh = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("Enemy Mesh"));
 	RootComponent = Mesh;
 
+
+	Mesh->OnComponentBeginOverlap.AddDynamic(this, &AShiftableEnemy::OnOverlapBegin);
+	Mesh->OnComponentEndOverlap.AddDynamic(this, &AShiftableEnemy::OnOverlapEnd);
 	//auto _rawPlayer = UConstants::GetPlayer(GetWorld());
 	//auto _playerCast = Cast<AEMJ_2021Character>(_rawPlayer);
 	//UConstants::GetPlayer(GetWorld())->ShiftedEvent.AddDynamic(this, &AShiftableEnemy::ShiftEnemy);
@@ -89,6 +93,27 @@ E_COLOR AShiftableEnemy::GetColor()
 		return Shift->GetCurrentColor();
 	}
 	else { return E_COLOR(); }
+}
+
+void AShiftableEnemy::OnOverlapBegin(UPrimitiveComponent* OverlappedComp, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult)
+{
+	// check if Actors do not equal nullptr
+	if (OtherActor)
+	{
+		if (OtherActor->IsA(APlayerProjectile::StaticClass()))
+		{
+			APlayerProjectile* _playerShot = Cast<APlayerProjectile>(OtherActor);
+			if (_playerShot)
+			{
+				if (_playerShot->GetColor() == Shift->GetCurrentColor()) { /*Nothing; We want opposites*/ }
+				else { Destroy(); }
+			}
+		}
+	}
+}
+
+void AShiftableEnemy::OnOverlapEnd(UPrimitiveComponent* OverlappedComp, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex)
+{
 }
 
 

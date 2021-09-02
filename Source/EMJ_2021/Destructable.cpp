@@ -3,6 +3,7 @@
 #include "Destructable.h"
 #include "AC_Health.h"
 #include "AC_Shift.h"
+#include "PlayerProjectile.h"
 #include "EMJ_2021Character.h"
 #include "Components/StaticMeshComponent.h"
 #include "EscapeGameMode_Base.h"
@@ -19,6 +20,9 @@ ADestructable::ADestructable()
 	Shift = CreateDefaultSubobject<UAC_Shift>(TEXT("Destructable Shift"));
 	Mesh = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("Object Mesh"));
 	RootComponent = Mesh;
+
+	//Mesh->OnComponentBeginOverlap.AddDynamic(this, &ADestructable::OnOverlapBegin);
+	//Mesh->OnComponentEndOverlap.AddDynamic(this, &ADestructable::OnOverlapEnd);
 }
 
 // Called when the game starts or when spawned
@@ -58,28 +62,56 @@ void ADestructable::TakeHit(int Amount, E_COLOR _attackingColor)
 				Destroy();
 			}
 		}
-			
 	}
 }
 
-E_COLOR ADestructable::GetCurrentColor()
-{
-	if (Shift) 
-		return Shift->GetCurrentColor();
-	else 
-		return E_COLOR();
-}
+E_COLOR ADestructable::GetCurrentColor() { return Shift->GetCurrentColor(); }
 // Called every frame
 void ADestructable::ShiftDestructable()
 {
 	if (Shift)
 	{
-		if (Shiftable)
+		if (Shift->CanShift)
 		{
 			Shift->Shift();
 		}
 	}
 }
+
+
+void ADestructable::OnOverlapBegin(class UPrimitiveComponent* OverlappedComp, class AActor* OtherActor, class UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult)
+{
+	// check if Actors do not equal nullptr
+	if (OtherActor)
+	{
+		if (OtherActor->IsA(APlayerProjectile::StaticClass()))
+		{
+			APlayerProjectile* _playerShot = Cast<APlayerProjectile>(OtherActor);
+			if (_playerShot) 
+			{
+				if (_playerShot->GetColor() == Shift->GetCurrentColor()) 
+				{
+					//Nothing; We want opposites
+
+				}
+				else 
+				{
+					Destroy();
+
+				}
+			}
+		}
+	}
+}
+
+void ADestructable::OnOverlapEnd(class UPrimitiveComponent* OverlappedComp, class AActor* OtherActor, class UPrimitiveComponent* OtherComp, int32 OtherBodyIndex)
+{
+	if (OtherActor && (OtherActor != this))
+	{
+		UE_LOG(LogTemp, Warning, TEXT("We Ended"));
+	}
+}
+
 
 void ADestructable::Destroy() { OnDestroy(); }
 

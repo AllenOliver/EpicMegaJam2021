@@ -8,6 +8,7 @@
 
 #pragma region Forward Declarations
 class UStaticMeshComponent;
+class UBoxComponent;
 #pragma endregion
 
 UCLASS()
@@ -34,7 +35,14 @@ public:
 
 public:
 	/* actor's visual representation */
+	UPROPERTY(EditAnywhere)
 	UStaticMeshComponent* StaticMesh;
+	
+	UPROPERTY(VisibleAnywhere, Category = "Trigger Box")
+		UBoxComponent* TriggerBox;
+
+	UPROPERTY(EditAnywhere)
+		FVector BoxExtents;
 
 	UPROPERTY(EditAnywhere)
 		float Lifespan = 5.0f;
