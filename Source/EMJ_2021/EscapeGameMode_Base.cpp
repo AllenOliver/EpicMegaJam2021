@@ -271,4 +271,8 @@ void AEscapeGameMode_Base::Shift_Player()
 
 void AEscapeGameMode_Base::Level_Win() { WinGame(); }
 
+<<<<<<< Updated upstream
 void AEscapeGameMode_Base::Level_Lose() {  }
+=======
+void AEscapeGameMode_Base::Level_Lose() { LoseGame(); }
+>>>>>>> Stashed changes

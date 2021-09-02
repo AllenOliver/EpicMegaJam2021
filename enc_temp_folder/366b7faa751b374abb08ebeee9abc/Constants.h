@@ -10,7 +10,6 @@
 
 #pragma region Forward Declaration
 class AEMJ_2021Character;
-class AEscapeGameMode_Base;
 #pragma endregion
 
 /**
@@ -21,19 +20,11 @@ class EMJ_2021_API UConstants : public UBlueprintFunctionLibrary
 {
 	GENERATED_BODY()
 public:
-
 	UFUNCTION(BlueprintCallable, Category = "Gameplay")
 		static void ResetCurrentLevel(UWorld* _world, UObject* _object) { UGameplayStatics::OpenLevel(_object, FName(_world->GetName()), false); }
 
 	UFUNCTION(BlueprintCallable, Category = "Gameplay")
 		static AEMJ_2021Character* GetPlayer(UWorld* World);
-<<<<<<< Updated upstream
-	//UFUNCTION(BlueprintCallable, Category = "Game Mode")
-	//	static AEscapeGameMode_Base* GetEscapeGameMode(UWorld* _world);
-=======
-	UFUNCTION(BlueprintCallable, Category = "Game Mode")
-		static AEscapeGameMode_Base* GetEscapeGameMode(UWorld* _world);
->>>>>>> Stashed changes
 };
 
 #pragma region Enums
@@ -44,14 +35,6 @@ enum class E_COLOR : uint8
 {
 	RED,
 	BLUE
-};
-
-UENUM(BlueprintType)
-/* [uint8] An Enum to handle the Winning or losing the game. */
-enum class E_WIN_OR_LOSS : uint8
-{
-	WIN,
-	LOSE
 };
 
 #pragma endregion

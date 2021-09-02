@@ -50,8 +50,11 @@ public:
 		void Level_Win();
 	UFUNCTION(Exec, Category = ExecFunctions)
 		void Level_Lose();
+<<<<<<< Updated upstream
 	//UFUNCTION(Exec, Category = ExecFunctions)
 	//	void Open_Level();
+=======
+>>>>>>> Stashed changes
 
 #pragma endregion
 
@@ -70,6 +73,7 @@ public:
 
 	UFUNCTION(BlueprintCallable, Category = "Gameplay")
 		virtual void WinGame();
+<<<<<<< Updated upstream
 
 	UFUNCTION(BlueprintCallable)
 		void OpenLevel(UWorld* _world, FString _levelName);
@@ -77,6 +81,14 @@ public:
 
 	UFUNCTION(BlueprintNativeEvent, Category = "Death")
 		void OnWinGame();
+=======
+
+	UFUNCTION(BlueprintNativeEvent, Category = "Death")
+		void OnWinGame();
+
+	UFUNCTION(BlueprintCallable, Category = "Gameplay")
+		virtual void LoseGame();
+>>>>>>> Stashed changes
 
 	UFUNCTION(BlueprintCallable, Category = "Gameplay")
 		virtual void RespawnPlayer();

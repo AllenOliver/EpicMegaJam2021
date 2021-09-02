@@ -9,16 +9,9 @@
 #include "GameFramework/Controller.h"
 #include "GameFramework/SpringArmComponent.h"
 #include "EscapeGameMode_Base.h"
-#include "Constants.h"
+
 #include "AC_Health.h"
 #include "AC_Shift.h"
-<<<<<<< Updated upstream
-#include "Engine/PointLight.h"
-#include "EscapeGameMode_Base.h"
-=======
-#include "EscapeGameMode_Base.h"
-
->>>>>>> Stashed changes
 
 //////////////////////////////////////////////////////////////////////////
 // AEMJ_2021Character
@@ -63,45 +56,18 @@ AEMJ_2021Character::AEMJ_2021Character()
 	Shift = CreateDefaultSubobject<UAC_Shift>(TEXT("Shift"));
 }
 
-bool AEMJ_2021Character::TakeHit(int Amount, E_COLOR _attackingColor)
+void AEMJ_2021Character::TakeHit(int Amount, E_COLOR _attackingColor)
 {
 	if (Shift && PlayerHealth)
 	{
-		if (_attackingColor == Shift->GetCurrentColor()) 
-		{
-			if (PlayerHealth->TakeHit(Amount)) //Died
-			{
-				return true;
-			}
-			else 
-			{
-				return false;
-			}
-			return false;
-		}
-		else 
-		{
-			return false;
-		}
-	}
-	else 
-	{
-		return false;
+		if (_attackingColor == Shift->GetCurrentColor())
+			PlayerHealth->TakeHit(Amount);
 	}
 }
 
-void AEMJ_2021Character::Die() 
-{ 
-	this->OnDie();
-
-
-}
-
-void AEMJ_2021Character::OnShift_Implementation()
-{
-}
 void AEMJ_2021Character::OnDie_Implementation()
 {
+	//ALevelObjectCache::instance.AddToCache(this);
 }
 
 //////////////////////////////////////////////////////////////////////////
@@ -109,17 +75,11 @@ void AEMJ_2021Character::OnDie_Implementation()
 
 void AEMJ_2021Character::SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent)
 {
-<<<<<<< Updated upstream
+
 	AEscapeGameMode_Base* gameMode = Cast<AEscapeGameMode_Base>(GetWorld()->GetAuthGameMode());
 	if (gameMode)
-=======
-	_escapeGameMode = UConstants::GetEscapeGameMode(GetWorld());
-
-	//AEscapeGameMode_Base* gameMode = Cast<AEscapeGameMode_Base>(GetWorld()->GetAuthGameMode());
-	if (_escapeGameMode)
->>>>>>> Stashed changes
 	{
-		_escapeGameMode->ShiftedEvent.AddDynamic(this, &AEMJ_2021Character::ShiftColors);
+		gameMode->ShiftedEvent.AddDynamic(this, &AEMJ_2021Character::ShiftColors);
 	}
 
 	// Set up gameplay key bindings
@@ -145,12 +105,14 @@ void AEMJ_2021Character::SetupPlayerInputComponent(class UInputComponent* Player
 	// VR headset functionality
 	PlayerInputComponent->BindAction("ResetVR", IE_Pressed, this, &AEMJ_2021Character::OnResetVR);
 
+
 	if (PlayerHealth)
 		PlayerHealth->Setup();
 	if (Shift)
 	{
 		Shift->Setup();
 		UE_LOG(LogTemp, Warning, TEXT("Setting up shift!"));
+
 	}
 }
 
@@ -218,22 +180,10 @@ void AEMJ_2021Character::MoveRight(float Value)
 
 void AEMJ_2021Character::ShiftColors()
 {
-	if (_escapeGameMode)
+	if (Shift)
 	{
-		_escapeGameMode->MassShift();
-	}
-	else
-	{
-<<<<<<< Updated upstream
 		Shift->Shift();
-		this->OnShift();
-=======
-		//Nothing
->>>>>>> Stashed changes
 	}
-	else
-	{
-	}
+
+	//ShiftedEvent.Broadcast(); //Call shift on everything
 }
-
-

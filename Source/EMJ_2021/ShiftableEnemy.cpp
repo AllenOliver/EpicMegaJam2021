@@ -80,6 +80,7 @@ bool AShiftableEnemy::TakeHit(int Amount, E_COLOR _attackingColor)
 	else { return false; }
 }
 
+<<<<<<< Updated upstream
 void AShiftableEnemy::Die() { OnDie(); }
 
 E_COLOR AShiftableEnemy::GetColor()
@@ -91,6 +92,8 @@ E_COLOR AShiftableEnemy::GetColor()
 	else { return E_COLOR(); }
 }
 
+=======
+>>>>>>> Stashed changes
 void AShiftableEnemy::OnDie_Implementation()
 {
 	//ALevelObjectCache::instance.AddToCache(this);

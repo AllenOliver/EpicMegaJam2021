@@ -4,17 +4,11 @@
 
 #include "CoreMinimal.h"
 #include "GameFramework/Character.h"
-#include "Math/Color.h"
 #include "EMJ_2021Character.generated.h"
 
 #pragma region Forward Declarations
 class UAC_Health;
 class UAC_Shift;
-class AEscapeGameMode_Base;
-<<<<<<< Updated upstream
-class APointLight;
-=======
->>>>>>> Stashed changes
 #pragma endregion
 
 UCLASS(config = Game)
@@ -35,9 +29,7 @@ public:
 	AEMJ_2021Character();
 
 	UFUNCTION(BlueprintCallable, Category = "Damage")
-		bool TakeHit(int Amount, E_COLOR _attackingColor);
-	UFUNCTION(BlueprintCallable, Category = "Death")
-		void Die();
+		void TakeHit(int Amount, E_COLOR _attackingColor);
 
 	//UPROPERTY(BlueprintAssignable)
 	//FShift ShiftedEvent;
@@ -50,22 +42,18 @@ public:
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Camera)
 		float BaseLookUpRate;
 
-	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	UPROPERTY(EditAnywhere)
 		UAC_Health* PlayerHealth;
-	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	UPROPERTY(EditAnywhere)
 		UAC_Shift* Shift;
+	UPROPERTY(EditAnywhere)
+		float BoomLength;
 
 	UFUNCTION(BlueprintCallable, Category = "Shifting")
 		void ShiftColors();
 
 	UFUNCTION(BlueprintNativeEvent, Category = "Death")
-		void OnShift();
-
-	UFUNCTION(BlueprintNativeEvent, Category = "Death")
 		void OnDie();
-
-private:
-	AEscapeGameMode_Base* _escapeGameMode;
 
 protected:
 
