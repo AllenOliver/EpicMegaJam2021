@@ -1,4 +1,4 @@
-# EpicMegaJam2021 - Continuum Shift
+# Continuum Shift
 ### **Our submission for the Epic Mega Jam 2021**
 
 ---
