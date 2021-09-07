@@ -4,17 +4,19 @@
 
 #include "CoreMinimal.h"
 #include "PoolableObject.h"
+#include "UShiftable.h"
 #include "EnemyProjectile.generated.h"
 
 #pragma region Forward Declarations
 class UAC_Shift;
+class UCapsuleComponent;
 #pragma endregion
 
 /**
  *
  */
 UCLASS()
-class EMJ_2021_API AEnemyProjectile : public APoolableObject
+class EMJ_2021_API AEnemyProjectile : public APoolableObject, public IShiftable
 {
 	GENERATED_BODY()
 public:
@@ -24,7 +26,6 @@ public:
 		UAC_Shift* Shift;
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 		E_COLOR CurrentColor;
-
 
 public:
 	UFUNCTION(BlueprintCallable, Category = "Enemy Projectiles")
@@ -45,5 +46,15 @@ public:
 	UFUNCTION()
 		void OnOverlapEnd(class UPrimitiveComponent* OverlappedComp, class AActor* OtherActor, class UPrimitiveComponent* OtherComp, int32 OtherBodyIndex);
 
+#pragma endregion
+
+#pragma region Interface functions
+	UFUNCTION(BlueprintCallable, Category = "IShiftable", meta = (Keyword = "on shift", ToolTip = "This entities shift function. Should be called in global event."))
+		virtual void OnShift_Implementation() override;
+	////UFUNCTION(BlueprintCallable, BlueprintNativeEvent, Category = "IShiftable", meta = (Keyword = "color", ToolTip = "Get the objects color"))
+	////	E_COLOR GetColor();
+	////virtual E_COLOR GetColor_Implementation() override;
+	UFUNCTION(BlueprintCallable, Category = "IShiftable", meta = (Keyword = "shiftable", ToolTip = "Get the object's Shiftable Flag"))
+		virtual bool CanShift_Implementation() override; // This is the declaration of the implementation
 #pragma endregion
 };

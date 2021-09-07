@@ -60,36 +60,13 @@ void UAC_Shift::SetCurrentMaterial(E_COLOR _color)
 
 	if (_meshComp)
 	{
-		if (UStaticMeshComponent* _mesh = Cast<UStaticMeshComponent>(_meshComp))
-		{
-			_mesh->SetMaterial(0, _currentMaterial);
-			UE_LOG(LogTemp, Warning, TEXT("Changing!"));
+		if (UStaticMeshComponent* _mesh = Cast<UStaticMeshComponent>(_meshComp)) { _mesh->SetMaterial(0, _currentMaterial); }
+	}
 
-		}
-		else
-		{
-			UE_LOG(LogTemp, Warning, TEXT("No cast to static mesh component!"));
-		}
-	}
-	else
-	{
-		UE_LOG(LogTemp, Warning, TEXT("No static mesh component!"));
-	}
 
 	if (_SkeletalMeshComp)
 	{
-		if (USkeletalMeshComponent* _mesh = Cast<USkeletalMeshComponent>(_SkeletalMeshComp))
-		{
-			_mesh->SetMaterial(0, _currentMaterial);
-		}
-		else
-		{
-			UE_LOG(LogTemp, Warning, TEXT("No cast to skeletal mesh component!"));
-		}
-	}
-	else
-	{
-		UE_LOG(LogTemp, Warning, TEXT("No skeletal mesh component!"));
+		if (USkeletalMeshComponent* _mesh = Cast<USkeletalMeshComponent>(_SkeletalMeshComp)) { _mesh->SetMaterial(0, _currentMaterial); }
 	}
 
 #pragma endregion

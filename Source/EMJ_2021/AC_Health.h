@@ -5,15 +5,12 @@
 #include "CoreMinimal.h"
 #include "Misc/FilterCollection.h"
 #include "Components/ActorComponent.h"
+#include "Constants.h"
 #include "AC_Health.generated.h"
 
-UENUM(BlueprintType)
-/* [uint8] An Enum to handle the death branch in BluePrint. */
-enum class EDeath : uint8
-{
-	Lived,
-	Died
-};
+#pragma region Forward Declarations
+
+#pragma endregion
 
 UCLASS(ClassGroup = (Custom), meta = (BlueprintSpawnableComponent))
 class EMJ_2021_API UAC_Health : public UActorComponent
@@ -28,15 +25,24 @@ public:
 		/* [Float] The max amount of health for this instance. */
 		int MaxHealth;
 
-	DECLARE_EVENT(UAC_Health, FChangedEvent)
-	FChangedEvent& OnDie() { return _changedEvent; }
+	//DECLARE_EVENT(UAC_Health, FChangedEvent)
+	//FChangedEvent& OnDie() { return _changedEvent; }
+	UFUNCTION(BlueprintCallable, Category = "Health Component", meta = (Keyword = "health", ToolTip = "Get Current Health"))
+		/**
+		 * Gets the current health value.
+		 */
+		int GetCurrentHealth();
 
+#pragma region Healing
 	UFUNCTION(BlueprintCallable, Category = "Health Component", meta = (Keyword = "health", ToolTip = "Heal this actor"))
 		/**
 		 * Heal this Actor
 		 * @param amount - the amount of health to restore
 		 */
 		void Heal(int amount);
+#pragma endregion
+
+#pragma region Taking hits
 
 	UFUNCTION(BlueprintCallable, Category = "Health Component", meta = (Keyword = "health", ToolTip = "Hurt this actor", ExpandEnumAsExecs = "Branch"))
 		/**
@@ -44,7 +50,7 @@ public:
 		 * @param amount - the amount of health to remove.
 		 * @param Branch - [BP] Node branches based whether they die or not from the damage.
 		 */
-		void TakeDamage(int amount, EDeath& Branch);
+		void TakeDamage(int amount, E_DEATH& Branch);
 
 	UFUNCTION()
 		/**
@@ -55,19 +61,17 @@ public:
 		 */
 		bool TakeHit(int amount);
 
+#pragma endregion
+
 protected:
-	// Called when the game starts
 	virtual void BeginPlay() override;
 
-public:
-	// Called every frame
-	virtual void TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction) override;
 private:
 
 	/* [int] The current amount of health for this instance. */
 	int _currentHealth;
 
-	FChangedEvent _changedEvent;
+	//FChangedEvent _changedEvent;
 
 	UFUNCTION()
 		/**

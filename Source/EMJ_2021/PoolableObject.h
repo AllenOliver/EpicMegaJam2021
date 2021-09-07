@@ -4,11 +4,13 @@
 
 #include "CoreMinimal.h"
 #include "GameFramework/Actor.h"
+#include "UShiftable.h"
 #include "PoolableObject.generated.h"
 
 #pragma region Forward Declarations
 class UStaticMeshComponent;
-class UBoxComponent;
+class UCapsuleComponent;
+class UConstants;
 #pragma endregion
 
 UCLASS()
@@ -24,7 +26,7 @@ public:
 	virtual void Tick(float DeltaSeconds) override;
 	virtual void SetLifeSpan(float InLifespan) override;
 
-	FORCEINLINE class UStaticMeshComponent* GetMesh() const { return StaticMesh; }
+	FORCEINLINE class UStaticMeshComponent* GetMesh() const { return ProjectileMesh; }
 
 	void SetActive(bool InpActive);
 	bool IsActive();
@@ -35,14 +37,12 @@ public:
 
 public:
 	/* actor's visual representation */
-	UPROPERTY(EditAnywhere)
-	UStaticMeshComponent* StaticMesh;
-	
-	UPROPERTY(VisibleAnywhere, Category = "Trigger Box")
-		UBoxComponent* TriggerBox;
-
-	UPROPERTY(EditAnywhere)
-		FVector BoxExtents;
+	UPROPERTY(VisibleAnywhere, Category = "Trigger Capsule")
+		UCapsuleComponent* TriggerCapsule;
+	UPROPERTY(VisibleAnywhere, Category = "Trigger Capsule")
+		UStaticMeshComponent* ProjectileMesh;
+	UPROPERTY(VisibleAnywhere, Category = "Trigger Capsule")
+		FVector2D CapsuleSize;
 
 	UPROPERTY(EditAnywhere)
 		float Lifespan = 5.0f;
