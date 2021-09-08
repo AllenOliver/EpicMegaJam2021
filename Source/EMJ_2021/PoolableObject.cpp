@@ -2,7 +2,8 @@
 
 #include "PoolableObject.h"
 #include "Components/StaticMeshComponent.h"
-#include "Components/BoxComponent.h"
+#include "Components/CapsuleComponent.h"
+#include "Constants.h"
 
 // Sets default values
 APoolableObject::APoolableObject()
@@ -10,20 +11,16 @@ APoolableObject::APoolableObject()
 	// Set this actor to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = true;
 
-	StaticMesh = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("Mesh"));
-	RootComponent = StaticMesh;
+	TriggerCapsule = CreateDefaultSubobject<UCapsuleComponent>(TEXT("Trigger Capsule"));
+	ProjectileMesh = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("Projectile Mesh"));
+	RootComponent = ProjectileMesh;
 
-	TriggerBox = CreateDefaultSubobject<UBoxComponent>(TEXT("Trigger Box"));
-	TriggerBox->SetBoxExtent(BoxExtents);
-	TriggerBox->SetCollisionProfileName(TEXT("Trigger"));
-	TriggerBox->SetupAttachment(RootComponent);
+	UConstants::SetupCapsule(TriggerCapsule, CapsuleSize);
+
+	TriggerCapsule->SetupAttachment(RootComponent);
 }
 
-// Called when the game starts or when spawned
-void APoolableObject::BeginPlay()
-{
-	Super::BeginPlay();
-}
+void APoolableObject::BeginPlay() { Super::BeginPlay(); }
 
 // Called every frame
 void APoolableObject::Tick(float DeltaTime)

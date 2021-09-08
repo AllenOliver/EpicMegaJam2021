@@ -2,30 +2,29 @@
 
 #include "PlayerProjectile.h"
 #include "AC_Shift.h"
-#include "Components/BoxComponent.h"
-
+#include "Components/CapsuleComponent.h"
+#include "Components/StaticMeshComponent.h"
+#include "Math/Vector2D.h"
+#include "Constants.h"
 
 APlayerProjectile::APlayerProjectile()
 {
 	Shift = CreateDefaultSubobject<UAC_Shift>(TEXT("Shift Component"));
-	
-	//TriggerBox->OnComponentBeginOverlap.AddDynamic(this, &APlayerProjectile::OnOverlapBegin);
-	//TriggerBox->OnComponentEndOverlap.AddDynamic(this, &APlayerProjectile::OnOverlapEnd);
+	//TriggerCapsule->OnComponentBeginOverlap.AddDynamic(this, &APlayerProjectile::OnOverlapBegin);
+	//TriggerCapsule->OnComponentEndOverlap.AddDynamic(this, &APlayerProjectile::OnOverlapEnd);
 }
-
 
 #pragma region Colors
 
-E_COLOR APlayerProjectile::GetColor() { return this->CurrentColor; }
+E_COLOR APlayerProjectile::GetColor() { return Shift->GetCurrentColor(); }
 
-void APlayerProjectile::Tick(float DeltaSeconds)
-{
-	Super::Tick(DeltaSeconds);
-}
+void APlayerProjectile::Tick(float DeltaSeconds) { Super::Tick(DeltaSeconds); }
 
 void APlayerProjectile::SetStartColor(E_COLOR _color)
 {
-	CurrentColor = _color;
+	TriggerCapsule->OnComponentBeginOverlap.AddDynamic(this, &APlayerProjectile::OnOverlapBegin);
+	TriggerCapsule->OnComponentEndOverlap.AddDynamic(this, &APlayerProjectile::OnOverlapEnd);
+
 	if (Shift)
 	{
 		Shift->Setup();
@@ -34,7 +33,6 @@ void APlayerProjectile::SetStartColor(E_COLOR _color)
 }
 #pragma endregion
 
-
 #pragma region Overlapping
 
 void APlayerProjectile::OnOverlapBegin(UPrimitiveComponent* OverlappedComp, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult)
@@ -42,16 +40,17 @@ void APlayerProjectile::OnOverlapBegin(UPrimitiveComponent* OverlappedComp, AAct
 	// check if Actors do not equal nullptr
 	if (OtherActor)
 	{
-		//if (OtherActor != this) { Destroy(); }
+		if (OtherActor != this) { OnDestroy(); }
 	}
 }
 
-void APlayerProjectile::OnOverlapEnd(UPrimitiveComponent* OverlappedComp, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex)
-{
-}
+void APlayerProjectile::OnOverlapEnd(UPrimitiveComponent* OverlappedComp, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex) {}
+
+void APlayerProjectile::OnShift_Implementation() { if (Shift) { Shift->Setup(); } }
+
+bool APlayerProjectile::CanShift_Implementation() { return Shift->CanShift; }
 
 #pragma endregion
-
 
 #pragma region Destroy Events
 

@@ -2,18 +2,20 @@
 
 #pragma once
 
+#include "UShiftable.h"
+#include "Destructable.generated.h"
+
 #pragma region Forward Declaration
 class UAC_Health;
 class UAC_Shift;
 class UStaticMeshComponent;
+class UBoxComponent;
 class APlayerProjectile;
 class AEMJ_2021Character;
 #pragma endregion
 
-#include "Destructable.generated.h"
-
 UCLASS()
-class EMJ_2021_API ADestructable : public AActor
+class EMJ_2021_API ADestructable : public AActor, public IShiftable
 {
 	GENERATED_BODY()
 
@@ -27,6 +29,10 @@ public:
 		UAC_Shift* Shift;
 	UPROPERTY(EditAnywhere)
 		UStaticMeshComponent* Mesh;
+	UPROPERTY(EditAnywhere)
+		UBoxComponent* TriggerBox;
+	UPROPERTY(EditAnywhere)
+		FVector TriggerBoxSize;
 	UPROPERTY(EditAnywhere)
 		bool Shiftable;
 
@@ -44,8 +50,15 @@ public:
 	UFUNCTION(BlueprintCallable, Category = "Color")
 		E_COLOR GetCurrentColor();
 
-	UFUNCTION(BlueprintCallable, Category = "Death")
-		void Destroy();
+	////UFUNCTION(BlueprintCallable, Category = "Death")
+	////	void Destroy();
+	UFUNCTION(BlueprintNativeEvent, Category = "Death")
+		void OnDestroy();
+
+	UFUNCTION(BlueprintCallable, Category = "Hit Event")
+		void OnHit();
+	UFUNCTION(BlueprintNativeEvent, Category = "Hit Event")
+		void E_OnTakeHit();
 
 	UFUNCTION()
 		void ShiftDestructable();
@@ -60,7 +73,13 @@ public:
 
 #pragma endregion
 
-
-	UFUNCTION(BlueprintNativeEvent, Category = "Death")
-		void OnDestroy();
+#pragma region Interface functions
+	UFUNCTION(BlueprintCallable, Category = "IShiftable", meta = (Keyword = "on shift", ToolTip = "This entities shift function. Should be called in global event."))
+		virtual void OnShift_Implementation() override;
+	////UFUNCTION(BlueprintCallable, BlueprintNativeEvent, Category = "IShiftable", meta = (Keyword = "color", ToolTip = "Get the objects color"))
+	////	E_COLOR GetColor();
+	////virtual E_COLOR GetColor_Implementation() override;
+	UFUNCTION(BlueprintCallable, Category = "IShiftable", meta = (Keyword = "shiftable", ToolTip = "Get the object's Shiftable Flag"))
+		virtual bool CanShift_Implementation() override; // This is the declaration of the implementation
+#pragma endregion
 };

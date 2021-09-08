@@ -11,6 +11,9 @@
 #pragma region Forward Declaration
 class AEMJ_2021Character;
 class AEscapeGameMode_Base;
+class UCapsuleComponent;
+class UBoxComponent;
+struct FVector2D;
 #pragma endregion
 
 /**
@@ -20,20 +23,66 @@ UCLASS()
 class EMJ_2021_API UConstants : public UBlueprintFunctionLibrary
 {
 	GENERATED_BODY()
-public:
 
-	UFUNCTION(BlueprintCallable, Category = "Gameplay")
-		static void ResetCurrentLevel(UWorld* _world, UObject* _object) { UGameplayStatics::OpenLevel(_object, FName(_world->GetName()), false);
+public:
+	UFUNCTION(BlueprintCallable, Category = "Constants", meta = (Keyword = "reset", ToolTip = "Reset this Level"))
+		/**
+		 * Resets the current level.
+		 * @param _world  - Current World Context.
+		 * @param _object - The Calling Object [Needed by engine :(].
+		 */
+		static void ResetCurrentLevel(UWorld* _world, UObject* _object)
+	{
+		UGameplayStatics::OpenLevel(_object, FName(_world->GetName()), false);
 	}
 
 	UFUNCTION(BlueprintCallable, Category = "Game Version")
 		FString GetGameVersion();
 
+	UFUNCTION(BlueprintCallable, Category = "Constants", meta = (Keyword = "collision", ToolTip = "Sets up a capsule component"))
+		/**
+		 * Simplifies setting up a box component.
+		 * @param Capsule     - [*] Pointer to a Capsule component.
+		 * @param capsuleSize - The size you want the Capsule at runtime.
+		 */
+		static void SetupCapsule(UCapsuleComponent*& Capsule, FVector2D capsuleSize);
 
-	//UFUNCTION(BlueprintCallable, Category = "Gameplay")
-	//	static AEMJ_2021Character* GetPlayer(UWorld* World);
+	UFUNCTION(BlueprintCallable, Category = "Constants", meta = (Keyword = "collision", ToolTip = "Sets up a box component"))
+		/**
+		 * Simplifies setting up a box component.
+		 * @param Box     - [*] Pointer to a Box component.
+		 * @param boxSize - The size you want the box at runtime.
+		 */
+		static void SetupBox(UBoxComponent*& Box, FVector boxSize);
+
+	UFUNCTION(BlueprintCallable, Category = "Constants", meta = (Keyword = "color", ToolTip = "Compare color of 2 objects."))
+		/**
+		 * Reduces this Actor's Current Health amount.
+		 * @param amount - the amount of health to remove.
+		 * @param Branch - [BP] Node branches based whether they die or not from the damage.
+		 */
+		static bool CompareColors();
+};
+/*
+UINTERFACE(MinimalAPI, Blueprintable)
+class UShiftable : public UInterface
+{
+	GENERATED_BODY()
 };
 
+class EMJ_2021_API IShiftable
+{
+	GENERATED_BODY()
+public:
+
+	UFUNCTION(BlueprintCallable, BlueprintNativeEvent, Category = "IShiftable", meta = (Keyword = "on shift", ToolTip = "This entities shift function. Should be called in global event."))
+		void OnShift();
+	//UFUNCTION(BlueprintCallable, BlueprintNativeEvent, Category = "IShiftable", meta = (Keyword = "color", ToolTip = "Get the objects color"))
+	//	E_COLOR GetColor();
+	UFUNCTION(BlueprintCallable, BlueprintNativeEvent, Category = "IShiftable", meta = (Keyword = "shiftable", ToolTip = "Get the object's Shiftable Flag"))
+		bool CanShift();
+};
+*/
 #pragma region Enums
 
 UENUM(BlueprintType)
@@ -41,7 +90,8 @@ UENUM(BlueprintType)
 enum class E_COLOR : uint8
 {
 	RED,
-	BLUE
+	BLUE,
+	NONE
 };
 
 UENUM(BlueprintType)
@@ -50,6 +100,22 @@ enum class E_WIN_OR_LOSS : uint8
 {
 	WIN,
 	LOSE
+};
+
+UENUM(BlueprintType)
+/* [uint8] An Enum to handle the Winning or losing the game. */
+enum class E_DEATH : uint8
+{
+	LIVE,
+	DIE
+};
+
+UENUM(BlueprintType)
+/* [uint8] An Enum to handle the matching color. */
+enum class E_MATCH : uint8
+{
+	MATCH,
+	NO_MATCH
 };
 
 #pragma endregion

@@ -3,6 +3,9 @@
 #include "Constants.h"
 #include "EMJ_2021Character.h"
 #include "EscapeGameMode_Base.h"
+#include "Math/Vector2D.h"
+#include "Components/CapsuleComponent.h"
+#include "Components/BoxComponent.h"
 
 //AEMJ_2021Character* UConstants::GetPlayer(UWorld* World)
 //{
@@ -20,11 +23,27 @@
 
 FString UConstants::GetGameVersion()
 {
-    FString proj;
-    GConfig->GetString(
-        TEXT("/Script/EngineSettings.GeneralProjectSettings"),
-        TEXT("ProjectVersion"),
-        proj,
-        GGameIni);
-    return proj;
+	FString proj;
+	GConfig->GetString(
+		TEXT("/Script/EngineSettings.GeneralProjectSettings"),
+		TEXT("ProjectVersion"),
+		proj,
+		GGameIni);
+	return proj;
+}
+void UConstants::SetupCapsule(UCapsuleComponent*& Capsule, FVector2D capsuleSize)
+{
+	Capsule->InitCapsuleSize(capsuleSize.X, capsuleSize.Y);
+	Capsule->SetCollisionProfileName(TEXT("Trigger"));
+}
+
+void UConstants::SetupBox(UBoxComponent*& Box, FVector boxSize)
+{
+	Box->SetBoxExtent(boxSize);
+	Box->SetCollisionProfileName(TEXT("Trigger"));
+}
+
+bool UConstants::CompareColors()
+{
+	return false;
 }
