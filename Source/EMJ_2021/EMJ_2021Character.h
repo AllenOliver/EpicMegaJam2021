@@ -8,6 +8,7 @@
 #include "EMJ_2021Character.generated.h"
 
 #pragma region Forward Declarations
+
 class UAC_Health;
 class UAC_Shift;
 class AEscapeGameMode_Base;
@@ -60,9 +61,11 @@ public:
 		UAC_Shift* Shift;
 
 	UFUNCTION(BlueprintCallable, Category = "Shifting")
-		void ShiftColors();
+		void ShiftColors();	
+	UFUNCTION(BlueprintCallable, Category = "Shifting")
+		E_COLOR GetCurrentColor();
 
-	UFUNCTION(BlueprintNativeEvent, Category = "Death")
+	UFUNCTION(BlueprintNativeEvent, Category = "Shifting")
 		void OnShift();
 
 	UFUNCTION(BlueprintNativeEvent, Category = "Death")
@@ -80,6 +83,8 @@ public:
 
 private:
 	AEscapeGameMode_Base* _escapeGameMode;
+
+#pragma region Built in
 
 protected:
 
@@ -120,4 +125,6 @@ public:
 	FORCEINLINE class USpringArmComponent* GetCameraBoom() const { return CameraBoom; }
 	/** Returns FollowCamera subobject **/
 	FORCEINLINE class UCameraComponent* GetFollowCamera() const { return FollowCamera; }
+#pragma endregion
+
 };

@@ -31,8 +31,7 @@ void ADestructable::BeginPlay()
 {
 	Super::BeginPlay();
 
-	if (Health)
-		Health->Setup();
+	if (Health) { Health->Setup(); }
 	if (Shift)
 	{
 		Shift->Setup();
@@ -40,10 +39,8 @@ void ADestructable::BeginPlay()
 	}
 
 	AEscapeGameMode_Base* gameMode = Cast<AEscapeGameMode_Base>(GetWorld()->GetAuthGameMode());
-	if (gameMode)
-	{
-		gameMode->ShiftedEvent.AddDynamic(this, &ADestructable::ShiftDestructable);
-	}
+
+	if (gameMode) { gameMode->ShiftedEvent.AddDynamic(this, &ADestructable::ShiftDestructable); }
 
 	//Add collision
 	if (TriggerBox)
@@ -86,7 +83,16 @@ void ADestructable::TakeHit(int Amount, E_COLOR _attackingColor)
 
 E_COLOR ADestructable::GetCurrentColor() { return Shift->GetCurrentColor(); }
 
-void ADestructable::ShiftDestructable() { if (Shift) { if (Shiftable) { Shift->Shift(); } } }
+void ADestructable::ShiftDestructable() { 
+	if (Shift) 
+	{ 
+		if (Shiftable) 
+		{ 
+			Shift->Shift(); 
+			OnShift_Call();
+		} 
+	} 
+}
 #pragma endregion
 
 #pragma region Overlaps
@@ -111,6 +117,14 @@ void ADestructable::OnOverlapBegin(class UPrimitiveComponent* OverlappedComp, cl
 
 void ADestructable::OnOverlapEnd(class UPrimitiveComponent* OverlappedComp, class AActor* OtherActor, class UPrimitiveComponent* OtherComp, int32 OtherBodyIndex)
 { }
+
+#pragma endregion
+
+#pragma region On Shift Event
+
+void ADestructable::OnShift_Call() { OnShifted(); }
+
+void ADestructable::OnShifted_Implementation() { /*Defined in BP!*/ }
 
 #pragma endregion
 

@@ -60,6 +60,11 @@ public:
 	UFUNCTION(BlueprintNativeEvent, Category = "Hit Event")
 		void E_OnTakeHit();
 
+	UFUNCTION(BlueprintCallable, Category = "Hit Event")
+		void OnShift_Call();
+	UFUNCTION(BlueprintNativeEvent, Category = "Hit Event")
+		void OnShifted();
+
 	UFUNCTION()
 		void ShiftDestructable();
 

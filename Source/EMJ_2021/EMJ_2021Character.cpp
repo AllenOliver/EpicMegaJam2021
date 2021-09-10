@@ -90,17 +90,13 @@ bool AEMJ_2021Character::TakeHit(int Amount, E_COLOR _attackingColor)
 	}
 }
 
-void AEMJ_2021Character::Die()
-{
-	this->OnDie();
-}
+void AEMJ_2021Character::Die() { this->OnDie(); }
 
-void AEMJ_2021Character::OnShift_Implementation()
-{
-}
-void AEMJ_2021Character::OnDie_Implementation()
-{
-}
+void AEMJ_2021Character::OnDie_Implementation() {/*Defined in BP!*/ }
+
+void AEMJ_2021Character::OnShift_Implementation() {/*Defined in BP!*/}
+
+
 
 //////////////////////////////////////////////////////////////////////////
 // Input
@@ -153,24 +149,14 @@ void AEMJ_2021Character::OnResetVR()
 	//		Add "HeadMountedDisplay" to [YourProject].Build.cs PublicDependencyModuleNames in order to build successfully (appropriate if supporting VR).
 	// or:
 	//		Comment or delete the call to ResetOrientationAndPosition below (appropriate if not supporting VR)
-	UHeadMountedDisplayFunctionLibrary::ResetOrientationAndPosition();
+	//UHeadMountedDisplayFunctionLibrary::ResetOrientationAndPosition();
 }
 
-void AEMJ_2021Character::TouchStarted(ETouchIndex::Type FingerIndex, FVector Location)
-{
-	Jump();
-}
+void AEMJ_2021Character::TouchStarted(ETouchIndex::Type FingerIndex, FVector Location) { Jump(); }
 
-void AEMJ_2021Character::TouchStopped(ETouchIndex::Type FingerIndex, FVector Location)
-{
-	StopJumping();
-}
+void AEMJ_2021Character::TouchStopped(ETouchIndex::Type FingerIndex, FVector Location) { StopJumping(); }
 
-void AEMJ_2021Character::TurnAtRate(float Rate)
-{
-	// calculate delta for this frame from the rate information
-	AddControllerYawInput(Rate * BaseTurnRate * GetWorld()->GetDeltaSeconds());
-}
+void AEMJ_2021Character::TurnAtRate(float Rate) { AddControllerYawInput(Rate * BaseTurnRate * GetWorld()->GetDeltaSeconds()); }
 
 void AEMJ_2021Character::LookUpAtRate(float Rate)
 {
@@ -212,12 +198,15 @@ void AEMJ_2021Character::ShiftColors()
 	if (Shift)
 	{
 		Shift->Shift();
+		OnShift();
 	}
-	else
-	{
-		//Nothing
-	}
+	else { /*Nothing*/ }
 }
+
+E_COLOR AEMJ_2021Character::GetCurrentColor() { return Shift->GetCurrentColor(); }
+
+
+#pragma region Overlap
 
 void AEMJ_2021Character::OnOverlapBegin(UPrimitiveComponent* OverlappedComp, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult)
 {
@@ -229,18 +218,18 @@ void AEMJ_2021Character::OnOverlapBegin(UPrimitiveComponent* OverlappedComp, AAc
 			AEnemyProjectile* _enemyShot = Cast<AEnemyProjectile>(OtherActor);
 			if (_enemyShot)
 			{
-				if (_enemyShot->GetColor() == Shift->GetCurrentColor())
-				{ /*Nothing; We want opposites*/ }
+				if (_enemyShot->GetColor() == Shift->GetCurrentColor()) { /*Nothing; We want opposites*/ }
 				else { Die(); }
 			}
 		}
 		else if (OtherActor->IsA(ADestructable::StaticClass()))
 		{
 			ADestructable* _destructable = Cast<ADestructable>(OtherActor);
-			if (_destructable) 
+			if (_destructable)
 			{
-				if (_destructable->GetCurrentColor() == Shift->GetCurrentColor()) 
-				{ /*Nothing; We want opposites*/ }
+				if (_destructable->GetCurrentColor() == Shift->GetCurrentColor())
+				{ /*Nothing; We want opposites*/
+				}
 				else { Die(); }
 			}
 
@@ -260,7 +249,7 @@ void AEMJ_2021Character::OnOverlapBegin(UPrimitiveComponent* OverlappedComp, AAc
 
 	if (OtherActor)
 	{
-		if (OtherActor->IsA(AEnemyProjectile::StaticClass())) 
+		if (OtherActor->IsA(AEnemyProjectile::StaticClass()))
 		{
 
 		}
@@ -270,3 +259,5 @@ void AEMJ_2021Character::OnOverlapBegin(UPrimitiveComponent* OverlappedComp, AAc
 void AEMJ_2021Character::OnOverlapEnd(UPrimitiveComponent* OverlappedComp, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex)
 {
 }
+
+#pragma endregion
